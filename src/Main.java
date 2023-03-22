@@ -10,14 +10,22 @@ public class Main {
         int rows;
         int columns;
 
+        System.out.println("\n****************************************");
+        System.out.println("*************** WELCOME! ***************");
+        System.out.println("****************************************\n");
+
+        System.out.println("Please enter a valid board configuration.\nThe total number of tiles must be even.\n");
+
         System.out.print("Number of rows: ");
         rows = input.nextInt();
 
         System.out.print("Number of columns: ");
         columns = input.nextInt();
 
+        System.out.print('\n');
+
         while (!isConfigurationEven(rows, columns)) {
-            System.out.println("The number of tiles must be even");
+            System.out.println("The total number of tiles must be even");
             System.out.println("Please enter a valid board configuration");
 
             System.out.print("Number of rows: ");
@@ -34,7 +42,9 @@ public class Main {
         Board board = new Board(rows, columns, cards);
         board.drawBoard();
 
-        System.out.print("Enter pair to reveal: ");
+        System.out.print('\n');
+
+        System.out.print("Enter a pair of cards to reveal: ");
         String pair = input.nextLine();
 
         //           (row,col)          (row,col)

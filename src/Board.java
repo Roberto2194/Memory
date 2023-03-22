@@ -21,7 +21,7 @@ public class Board {
         int cardNum = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.print(cards[cardNum].faceUp());
+                System.out.print(cards[cardNum].faceDown());
                 cardNum++;
             }
             System.out.print("\n");
