@@ -1,6 +1,6 @@
 package src;
 
-public class Board<T> {
+public class Board {
 
     private final int rows;
 
@@ -37,7 +37,7 @@ public class Board<T> {
     }
 
     /**
-     * Draws the board using the number of rows and columns passed
+     * Draws the board using the number of rows and columns stored
      */
     public void drawBoard() {
         int cardNum = 0;

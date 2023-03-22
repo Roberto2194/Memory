@@ -16,7 +16,7 @@ public class Main {
         char[] symbols = makeSymbols(rows, columns);
         Card[] cards = createCards(symbols);
 
-        Board<Card> board = new Board<>(rows, columns, cards);
+        Board board = new Board(rows, columns, cards);
 
         if (board.isConfigurationEven()) {
             board.drawBoard();
@@ -27,9 +27,15 @@ public class Main {
 
         //           (row,col)          (row,col)
         // first card: (2,1) second card: (3,2)
-
     }
 
+    /**
+     * creates as many symbols as tiles inside the board
+     * the number of tiles is given by rows*columns
+     * @param rows the number of rows
+     * @param columns the number of columns
+     * @return the array of symbols created
+     */
     public static char[] makeSymbols(int rows, int columns) {
         // characters from 33 to 126 (126-33=94*2=188)
         char[] symbols = new char[rows * columns];
@@ -45,6 +51,11 @@ public class Main {
         return symbols;
     }
 
+    /**
+     * creates as many cards as the number of symbols given
+     * @param symbols the array of symbols
+     * @return the array of cards created
+     */
     public static Card[] createCards(char[] symbols) {
         Card[] cards = new Card[symbols.length];
 
