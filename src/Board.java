@@ -1,14 +1,17 @@
 package src;
 
-public class Board {
+public class Board<T> {
 
     private final int rows;
 
     private final int columns;
 
-    public Board(int rows, int columns) {
+    private final Card[] cards;
+
+    public Board(int rows, int columns, Card[] cards) {
         this.rows = rows;
         this.columns = columns;
+        this.cards = cards;
     }
 
     public int getRows() {
@@ -17,6 +20,10 @@ public class Board {
 
     public int getColumns() {
         return columns;
+    }
+
+    public Card[] getCards() {
+        return cards;
     }
 
     /**
@@ -33,9 +40,11 @@ public class Board {
      * Draws the board using the number of rows and columns passed
      */
     public void drawBoard() {
+        int cardNum = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.print("X");
+                System.out.print(cards[cardNum].faceUp());
+                cardNum++;
             }
             System.out.print("\n");
         }

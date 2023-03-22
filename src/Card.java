@@ -12,32 +12,22 @@ public class Card {
         this.faceUp = faceUp;
     }
 
-    public char getFaceUp() {
+    public char faceUp() {
         return faceUp;
     }
 
-    public char getFaceDown() {
+    public char faceDown() {
         return faceDown;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null) {
-            return false;
-        }
-        if (this.getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
         Card that = (Card) o;
-        if (!Objects.equals(this.faceUp, that.faceUp)) {
-            return false;
-        }
-        if (!Objects.equals(this.faceDown, that.faceDown)) {
-            return false;
-        }
+        if (!Objects.equals(this.faceUp, that.faceUp)) return false;
+        if (!Objects.equals(this.faceDown, that.faceDown)) return false;
         return true;
     }
 

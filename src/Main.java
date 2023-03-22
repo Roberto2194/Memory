@@ -13,17 +13,21 @@ public class Main {
         System.out.print("Number of columns: ");
         int columns = input.nextInt();
 
-        Board board = new Board(rows, columns);
+        char[] symbols = makeSymbols(rows, columns);
+        Card[] cards = createCards(symbols);
+
+        Board<Card> board = new Board<>(rows, columns, cards);
 
         if (board.isConfigurationEven()) {
             board.drawBoard();
         }
 
-        char[] symbols = makeSymbols(board.getRows(), board.getColumns());
+        System.out.print("Enter pair to reveal: ");
+        String pair = input.nextLine();
 
-        Card[] cards = createCards(symbols);
+        //           (row,col)          (row,col)
+        // first card: (2,1) second card: (3,2)
 
-        System.out.print("First 4 cards: " + cards[0].getFaceUp() + " " + cards[1].getFaceUp() + " " + cards[2].getFaceUp() + " " + cards[3].getFaceDown());
     }
 
     public static char[] makeSymbols(int rows, int columns) {
@@ -40,7 +44,6 @@ public class Main {
 
         return symbols;
     }
-
 
     public static Card[] createCards(char[] symbols) {
         Card[] cards = new Card[symbols.length];
