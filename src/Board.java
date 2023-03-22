@@ -22,18 +22,17 @@ public class Board {
     /**
      * Checks whether the configuration that we get as an input
      * from the user is even, otherwise we can not create the board
+     *
      * @return true or false based on whether the configuration is even or not
      */
-    public boolean isConfigurationEven(int rows, int columns) {
-        return (rows*columns % 2 == 0);
+    public boolean isConfigurationEven() {
+        return (rows * columns % 2 == 0);
     }
 
     /**
-     * Draws the board based on the number of rows and columns passed
-     * @param rows the number of rows to be displayed
-     * @param columns the number of columns to be displayed
+     * Draws the board using the number of rows and columns passed
      */
-    public void drawBoard(int rows, int columns) {
+    public void drawBoard() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 System.out.print("X");
