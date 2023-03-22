@@ -82,13 +82,23 @@ public class Main {
         return cards;
     }
 
-    // TODO: - Needs to be fixed
+    /**
+     * shuffles an array of cards
+     *
+     * @param cards the cards that need to be shuffled
+     */
     public static void shuffleCards(Card[] cards) {
-        List<Card> cardList = Arrays.asList(cards);
+        Random random = new Random();
 
-        for (int i = 0; i < cards.length; i++) {
-            int index = new Random().nextInt(cardList.size());
-            cardList.get(index);
+        int i = 0;
+        while (i < cards.length) {
+            // Pick a random index
+            int index = random.nextInt(cards.length);
+            // Swap cards[i] with the element at random index
+            Card temp = cards[i];
+            cards[i] = cards[index];
+            cards[index] = temp;
+            i++;
         }
     }
 
@@ -96,7 +106,7 @@ public class Main {
      * Checks whether the configuration that we get as an input
      * from the user is even, otherwise we can not create the board
      *
-     * @param rows the number of rows
+     * @param rows    the number of rows
      * @param columns the number of columns
      * @return true or false based on whether the configuration is even or not
      */
