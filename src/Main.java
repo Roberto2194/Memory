@@ -12,28 +12,21 @@ public class Main {
         System.out.println("*************** WELCOME! ***************");
         System.out.println("****************************************\n");
 
-        System.out.println("Please enter a valid board configuration.\nThe total number of tiles must be even.\n");
-
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Number of rows: ");
-        rows = input.nextInt();
-
-        System.out.print("Number of columns: ");
-        columns = input.nextInt();
-
-        System.out.print('\n');
-
-        while (!isConfigurationEven(rows, columns)) {
-            System.out.println("The total number of tiles must be even");
+        do {
             System.out.println("Please enter a valid board configuration");
+            System.out.println("The total number of tiles must be even");
+            System.out.println("The board must have at lease 4 tiles\n");
 
             System.out.print("Number of rows: ");
             rows = input.nextInt();
 
             System.out.print("Number of columns: ");
             columns = input.nextInt();
-        }
+        } while (!isConfigurationValid(rows, columns));
+
+        System.out.print('\n');
 
         char[] symbols = makeSymbols(rows, columns);
         Card[] cards = createCards(symbols);
@@ -46,22 +39,19 @@ public class Main {
 
         System.out.print("First card - row: ");
         int firstCardRow = input.nextInt();
-
         System.out.print("First card - column: ");
         int firstCardColumn = input.nextInt();
 
         System.out.print("Second card - row: ");
         int secondCardRow = input.nextInt();
-
         System.out.print("Second card - column: ");
         int secondCardColumn = input.nextInt();
 
-        //           (row,col)          (row,col)
-        // first card: (2,1) second card: (3,2)
+
     }
 
     /**
-     * creates as many symbols as tiles inside the board
+     * Creates as many symbols as tiles inside the board
      * the number of tiles is given by rows*columns
      *
      * @param rows    the number of rows
@@ -84,7 +74,7 @@ public class Main {
     }
 
     /**
-     * creates as many cards as the number of symbols given
+     * Creates as many cards as the number of symbols given
      *
      * @param symbols the array of symbols
      * @return the array of cards created
@@ -102,7 +92,7 @@ public class Main {
     }
 
     /**
-     * shuffles an array of cards
+     * Shuffles an array of cards putting them in a random order
      *
      * @param cards the cards that need to be shuffled
      */
@@ -123,14 +113,32 @@ public class Main {
 
     /**
      * Checks whether the configuration that we get as an input
-     * from the user is even, otherwise we can not create the board
+     * from the user is valid, otherwise we can not create the board.
+     * For the configuration to be valid we need at lest 4 tiles,
+     * and if so, the total number of tiles must be even.
      *
      * @param rows    the number of rows
      * @param columns the number of columns
-     * @return true or false based on whether the configuration is even or not
+     * @return true or false based on whether the configuration is valid or not
      */
-    public static boolean isConfigurationEven(int rows, int columns) {
-        return (rows * columns % 2 == 0);
+    public static boolean isConfigurationValid(int rows, int columns) {
+        int tiles = rows * columns;
+        if (tiles < 4) return false;
+        return (tiles % 2 == 0);
+    }
+
+    /**
+     * Checks whether the values that the user inserted for
+     * rows and column are valid. That is:
+     * 1 - whether they are inside the boundaries of the board
+     * 2 - whether they correspond to an already reveled card
+     *
+     * @param row    the row of the card
+     * @param column the column of the card
+     * @return true or false based on whether the inserted one is a valid position or not
+     */
+    public static boolean areValuesValid(int row, int column) {
+
     }
 
 }
