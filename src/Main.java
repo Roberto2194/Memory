@@ -5,8 +5,6 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-
         int rows;
         int columns;
 
@@ -15,6 +13,8 @@ public class Main {
         System.out.println("****************************************\n");
 
         System.out.println("Please enter a valid board configuration.\nThe total number of tiles must be even.\n");
+
+        Scanner input = new Scanner(System.in);
 
         System.out.print("Number of rows: ");
         rows = input.nextInt();
@@ -44,8 +44,17 @@ public class Main {
 
         System.out.print('\n');
 
-        System.out.print("Enter a pair of cards to reveal: ");
-        String pair = input.nextLine();
+        System.out.print("First card - row: ");
+        int firstCardRow = input.nextInt();
+
+        System.out.print("First card - column: ");
+        int firstCardColumn = input.nextInt();
+
+        System.out.print("Second card - row: ");
+        int secondCardRow = input.nextInt();
+
+        System.out.print("Second card - column: ");
+        int secondCardColumn = input.nextInt();
 
         //           (row,col)          (row,col)
         // first card: (2,1) second card: (3,2)
