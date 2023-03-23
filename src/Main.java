@@ -36,10 +36,10 @@ public class Main {
 
         shuffleCards(cards);
 
-        // TODO: - we have to populate the "int[][] board" matrix with cards at every position.
-        drawBoard(rows, columns, cards);
+        for (Card card : cards) card.setShowing(true); // just for testing
 
-        System.out.print('\n');
+        System.out.println("Here is the game board... good luck!\n");
+        drawBoard(board, cards);
 
         int firstCardRow;
         int firstCardColumn;
@@ -47,10 +47,12 @@ public class Main {
         int secondCardColumn;
 
         do {
-            System.out.println("Please enter valid card values");
-            System.out.println("First and second card must be different");
-            System.out.println("Cards must be inside the boundaries of the board");
-            System.out.println("Cards must NOT correspond to already reveled cards\n");
+            System.out.println("\n*************************************************************");
+            System.out.println("***             Please enter valid card values:           ***");
+            System.out.println("***       1- First and second card must be different      ***");
+            System.out.println("***  2- Cards must be inside the boundaries of the board  ***");
+            System.out.println("*** 3- Cards must NOT correspond to already reveled cards ***");
+            System.out.println("*************************************************************\n");
 
             System.out.print("First card - row: ");
             firstCardRow = input.nextInt();
@@ -128,15 +130,18 @@ public class Main {
     /**
      * Draws the board using the number of rows and columns stored
      *
-     * @param rows    the number of rows in the board
-     * @param columns the number of columns in the board
+     * @param board   the game board we want to iterate through
      * @param cards   the cards to be displayed inside every tile
      */
-    public static void drawBoard(int rows, int columns, Card[] cards) {
+    public static void drawBoard(int[][] board, Card[] cards) {
         int cardNum = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.print(cards[cardNum].faceDown());
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                if (cards[cardNum].isShowing()) {
+                    System.out.print(cards[cardNum].faceUp() + "\t");
+                } else {
+                    System.out.print(cards[cardNum].faceDown() + "\t");
+                }
                 cardNum++;
             }
             System.out.print("\n");
