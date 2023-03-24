@@ -1,7 +1,7 @@
 package src;
 
-import javax.swing.*;
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
         int columns;
         int flipCounter;
 
-        GameFrame gameFrame = new GameFrame();
+        new GameFrame();
 
         System.out.println("\n************************************************************");
         System.out.println("********************** W E L C O ME ! **********************");
