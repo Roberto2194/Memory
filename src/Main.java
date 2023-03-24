@@ -1,5 +1,6 @@
 package src;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Main {
@@ -8,6 +9,8 @@ public class Main {
         int rows;
         int columns;
         int flipCounter;
+
+        GameFrame gameFrame = new GameFrame();
 
         System.out.println("\n************************************************************");
         System.out.println("********************** W E L C O ME ! **********************");
@@ -71,16 +74,15 @@ public class Main {
 
         // Reveal the two cards the user has selected
         Card firstCard = board[firstCardRow][firstCardColumn];
-        firstCard.setShowing(true);
+        firstCard.setIsShowing(true);
 
         Card secondCard = board[secondCardRow][secondCardColumn];
-        secondCard.setShowing(true);
+        secondCard.setIsShowing(true);
 
         //Draw the board here with the two revealed cards
         drawBoard(board);
 
         // TODO:
-        //  0 - Rebuild the app using JFrame/JButton and such instead of printing stuff to console
         //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
         //  2 - Otherwise if they have the same front, then leave them face up.
         //  In both cases increase the flip count, and save the move to file on a worker thread.
@@ -235,6 +237,5 @@ public class Main {
         if (firstCard.getIsShowing() || secondCard.getIsShowing()) return false;
         return true;
     }
-
 
 }

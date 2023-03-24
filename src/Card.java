@@ -18,7 +18,7 @@ public class Card {
         return isShowing;
     }
 
-    public void setShowing(boolean showing) {
+    public void setIsShowing(boolean showing) {
         isShowing = showing;
     }
 
