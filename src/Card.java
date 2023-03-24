@@ -6,6 +6,8 @@ public class Card {
 
     private final char front;
 
+    private final char back = 'X';
+
     private boolean isShowing = false;
 
     public Card(char front) {
@@ -13,17 +15,16 @@ public class Card {
     }
 
     public char faceUp() {
-        this.isShowing = true;
         return front;
     }
 
     public char faceDown() {
-        this.isShowing = false;
-        return 'X';
+        return back;
     }
 
-    public boolean isShowing() {
-        return isShowing;
+    public char isShowing() {
+        if (this.isShowing) return this.front;
+        else return this.back;
     }
 
     public void setShowing(boolean showing) {

@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         int rows;
         int columns;
+        int flipCounter;
 
         System.out.println("\n****************************************");
         System.out.println("*************** WELCOME! ***************");
@@ -24,22 +25,21 @@ public class Main {
 
             System.out.print("Number of columns: ");
             columns = input.nextInt();
+
+            System.out.print('\n');
         } while (!isConfigurationValid(rows, columns));
 
-        // we can see the board as a simple matrix of rows and cols
-        int[][] board = new int[rows][columns];
-
-        System.out.print('\n');
+        // we can see the board as a simple matrix of Cards
+        Card[][] board = new Card[rows][columns];
 
         char[] symbols = makeSymbols(rows, columns);
         Card[] cards = createCards(symbols);
 
         shuffleCards(cards);
+        addCardsToBoard(board, cards);
 
-        for (Card card : cards) card.setShowing(true); // just for testing
-
-        System.out.println("Here is the game board... good luck!\n");
-        drawBoard(board, cards);
+        //Draw the board here with all cards face down
+        drawBoard(board);
 
         int firstCardRow;
         int firstCardColumn;
@@ -48,22 +48,32 @@ public class Main {
 
         do {
             System.out.println("\n*************************************************************");
-            System.out.println("***             Please enter valid card values:           ***");
+            System.out.println("***      Please select the two cards you want to flip:    ***");
             System.out.println("***       1- First and second card must be different      ***");
             System.out.println("***  2- Cards must be inside the boundaries of the board  ***");
             System.out.println("*** 3- Cards must NOT correspond to already reveled cards ***");
             System.out.println("*************************************************************\n");
 
             System.out.print("First card - row: ");
-            firstCardRow = input.nextInt();
+            firstCardRow = input.nextInt() - 1; // -1 because the user doesn't take into account the indexing of the array
             System.out.print("First card - column: ");
-            firstCardColumn = input.nextInt();
+            firstCardColumn = input.nextInt() - 1;
 
             System.out.print("Second card - row: ");
-            secondCardRow = input.nextInt();
+            secondCardRow = input.nextInt() - 1;
             System.out.print("Second card - column: ");
-            secondCardColumn = input.nextInt();
+            secondCardColumn = input.nextInt() - 1;
         } while (!areValuesValid(rows, columns, firstCardRow, firstCardColumn, secondCardRow, secondCardColumn));
+
+        // Reveal the two cards the user has selected
+        Card firstCard = board[firstCardRow][firstCardColumn];
+        firstCard.setShowing(true);
+
+        Card secondCard = board[secondCardRow][secondCardColumn];
+        secondCard.setShowing(true);
+
+        //Draw the board here with the two revealed cards
+        drawBoard(board);
     }
 
     /**
@@ -128,21 +138,31 @@ public class Main {
     }
 
     /**
-     * Draws the board using the number of rows and columns stored
+     * Adds to each position of the board the given card
      *
-     * @param board   the game board we want to iterate through
-     * @param cards   the cards to be displayed inside every tile
+     * @param board the game board we want to add cards to
+     * @param cards the cards to be displayed inside every tile
      */
-    public static void drawBoard(int[][] board, Card[] cards) {
+    public static void addCardsToBoard(Card[][] board, Card[] cards) {
         int cardNum = 0;
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
-                if (cards[cardNum].isShowing()) {
-                    System.out.print(cards[cardNum].faceUp() + "\t");
-                } else {
-                    System.out.print(cards[cardNum].faceDown() + "\t");
-                }
+                board[row][col] = cards[cardNum];
                 cardNum++;
+            }
+        }
+    }
+
+    /**
+     * Draws the board in the console revealing
+     * the cards that were selected by the user
+     *
+     * @param board the board to be drawn into console
+     */
+    public static void drawBoard(Card[][] board) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                System.out.print(board[row][col].isShowing() + "\t");
             }
             System.out.print("\n");
         }
@@ -189,11 +209,11 @@ public class Main {
     ) {
         // 1- first and second card must be different
         if (firstCardRow == secondCardRow && firstCardColumn == secondCardColumn) return false;
-        // 2- are we inside the boundaries of the board
+        // 2- cards must be inside the boundaries of the board
         if (firstCardRow > boardRows || firstCardColumn > boardColumns) return false;
-        // 3- are the col and row inserted the ones of an already revealed card
+        // 3- cards must NOT correspond to already reveled cards
         // TODO : - implement point number 3)
-        return false;
+        return true;
     }
 
 
