@@ -14,21 +14,18 @@ public class Card {
         this.front = front;
     }
 
-    public char faceUp() {
-        return front;
-    }
-
-    public char faceDown() {
-        return back;
-    }
-
-    public char isShowing() {
-        if (this.isShowing) return this.front;
-        else return this.back;
+    public boolean getIsShowing() {
+        return isShowing;
     }
 
     public void setShowing(boolean showing) {
         isShowing = showing;
+    }
+
+    @Override
+    public String toString() {
+        if (this.isShowing) return Character.toString(this.front);
+        else return Character.toString(this.back);
     }
 
     @Override

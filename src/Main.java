@@ -9,16 +9,18 @@ public class Main {
         int columns;
         int flipCounter;
 
-        System.out.println("\n****************************************");
-        System.out.println("*************** WELCOME! ***************");
-        System.out.println("****************************************\n");
+        System.out.println("\n************************************************************");
+        System.out.println("********************** W E L C O ME ! **********************");
+        System.out.println("************************************************************\n");
 
         Scanner input = new Scanner(System.in);
 
         do {
-            System.out.println("Please enter a valid board configuration");
-            System.out.println("Remember that the total number of tiles must be even");
-            System.out.println("And the board must have at lease 4 tiles\n");
+            System.out.println("************************************************************");
+            System.out.println("***       Please enter a valid board configuration       ***");
+            System.out.println("*** Remember that the total number of tiles must be even ***");
+            System.out.println("***       And the board must have at least 4 tiles       ***");
+            System.out.println("************************************************************\n");
 
             System.out.print("Number of rows: ");
             rows = input.nextInt();
@@ -63,7 +65,9 @@ public class Main {
             secondCardRow = input.nextInt() - 1;
             System.out.print("Second card - column: ");
             secondCardColumn = input.nextInt() - 1;
-        } while (!areValuesValid(rows, columns, firstCardRow, firstCardColumn, secondCardRow, secondCardColumn));
+
+            System.out.print('\n');
+        } while (!areValuesValid(board, rows, columns, firstCardRow, firstCardColumn, secondCardRow, secondCardColumn));
 
         // Reveal the two cards the user has selected
         Card firstCard = board[firstCardRow][firstCardColumn];
@@ -74,6 +78,16 @@ public class Main {
 
         //Draw the board here with the two revealed cards
         drawBoard(board);
+
+        // TODO:
+        //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
+        //  2 - Otherwise if they have the same front, then leave them face up.
+        //  In both cases increase the flip count, and save the move to file on a worker thread.
+        //  3 - If all cards are flipped up, then end the game and show the top 5-scores loading the file that contains them.
+        //  4 - At the beginning of the game the player can choose to:
+        //      "start a new game",
+        //      "replay most recent game" -> which loads the most recent game saved from file
+        //      "change difficulty" -> which changes the timer of the revealed cards
     }
 
     /**
@@ -162,7 +176,7 @@ public class Main {
     public static void drawBoard(Card[][] board) {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
-                System.out.print(board[row][col].isShowing() + "\t");
+                System.out.print(board[row][col].toString() + "\t");
             }
             System.out.print("\n");
         }
@@ -200,6 +214,7 @@ public class Main {
      * @return true or false based on whether the inserted one is a valid position or not
      */
     public static boolean areValuesValid(
+            Card[][] board,
             int boardRows,
             int boardColumns,
             int firstCardRow,
@@ -207,12 +222,15 @@ public class Main {
             int secondCardRow,
             int secondCardColumn
     ) {
+        Card firstCard = board[firstCardRow][firstCardColumn];
+        Card secondCard = board[secondCardRow][secondCardColumn];
+
         // 1- first and second card must be different
         if (firstCardRow == secondCardRow && firstCardColumn == secondCardColumn) return false;
         // 2- cards must be inside the boundaries of the board
         if (firstCardRow > boardRows || firstCardColumn > boardColumns) return false;
         // 3- cards must NOT correspond to already reveled cards
-        // TODO : - implement point number 3)
+        if (firstCard.getIsShowing() || secondCard.getIsShowing()) return false;
         return true;
     }
 
