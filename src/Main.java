@@ -10,7 +10,7 @@ public class Main {
         int columns;
         int flipCounter;
 
-        new GameFrame();
+        new MainFrame();
 
         System.out.println("\n************************************************************");
         System.out.println("********************** W E L C O ME ! **********************");

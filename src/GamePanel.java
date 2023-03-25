@@ -7,35 +7,36 @@ import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    GamePanel() {
-        this.setSize(800, 800);
-        this.setLayout(new GridLayout(4, 4)); // the type of layout for our frame
+    GamePanel(int rows, int cols) {
+        this.setLayout(new GridLayout(rows, cols));
 
-        // TODO: - EVERY BUTTON IS A CARD AND WE CREATE AS MANY BUTTONS AS ROWS AND COLUMNS AS SELECTED BY THE USER
-        this.add(new GameButton("New Game", Color.yellow, 250, this));
-        this.add(new GameButton("New Game", Color.white, 250, this));
-        this.add(new GameButton("New Game", Color.black, 250, this));
-        this.add(new GameButton("New Game", Color.blue, 250, this));
-        this.add(new GameButton("New Game", Color.yellow, 250, this));
-        this.add(new GameButton("New Game", Color.white, 250, this));
-        this.add(new GameButton("New Game", Color.black, 250, this));
-        this.add(new GameButton("New Game", Color.blue, 250, this));
-        this.add(new GameButton("New Game", Color.yellow, 250, this));
-        this.add(new GameButton("New Game", Color.white, 250, this));
-        this.add(new GameButton("New Game", Color.black, 250, this));
-        this.add(new GameButton("New Game", Color.blue, 250, this));
-        this.add(new GameButton("New Game", Color.yellow, 250, this));
-        this.add(new GameButton("New Game", Color.white, 250, this));
-        this.add(new GameButton("New Game", Color.black, 250, this));
-        this.add(new GameButton("New Game", Color.blue, 250, this));
+        this.add(new CardButton("icons/pineapple.png", this));
+        this.add(new CardButton("icons/watermelon.png", this));
+        this.add(new CardButton("icons/coconut.png", this));
+        this.add(new CardButton("icons/lime.png", this));
 
-        //this.pack();
+        this.add(new CardButton("icons/mango.png", this));
+        this.add(new CardButton("icons/grapes.png", this));
+        this.add(new CardButton("icons/pear.png", this));
+        this.add(new CardButton("icons/plum.png", this));
+
+        this.add(new CardButton("icons/pineapple.png", this));
+        this.add(new CardButton("icons/watermelon.png", this));
+        this.add(new CardButton("icons/coconut.png", this));
+        this.add(new CardButton("icons/lime.png", this));
+
+        this.add(new CardButton("icons/mango.png", this));
+        this.add(new CardButton("icons/grapes.png", this));
+        this.add(new CardButton("icons/pear.png", this));
+        this.add(new CardButton("icons/plum.png", this));
+
         this.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        System.out.println("Card Button pressed");
+        // cardButton.setEnabled(false);
     }
 
 }
