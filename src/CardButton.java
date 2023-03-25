@@ -3,10 +3,12 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
+import static src.GameIcons.*;
+
 public class CardButton extends JButton {
 
     private final ImageIcon frontIcon;
-    private final ImageIcon backIcon = scaleIcon("icons/card_back.png");
+    private final ImageIcon backIcon = scaleIcon(GAME_CARD_BACK);
     private boolean isShowing;
 
     CardButton(String frontIcon) {
