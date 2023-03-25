@@ -1,8 +1,9 @@
 package src;
 
+import javax.swing.*;
 import java.util.Objects;
 
-public class Card {
+public class Card extends JButton {
 
     private final char front;
 

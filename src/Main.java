@@ -91,7 +91,7 @@ public class Main {
         //  4 - At the beginning of the game the player can choose to:
         //      "start a new game",
         //      "replay most recent game" -> which loads the most recent game saved from file
-        //      "change difficulty" -> which changes the timer of the revealed cards
+        //      "settings" -> we can change both the time when cards are faceUp and the grid configuration
     }
 
     /**
