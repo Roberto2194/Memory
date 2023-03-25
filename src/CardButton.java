@@ -1,25 +1,31 @@
 package src;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class CardButton extends JButton {
 
     private final ImageIcon frontIcon;
-    private final ImageIcon backIcon = new ImageIcon("icons/card_back.png");
-    private boolean isShowing = false;
+    private final ImageIcon backIcon = scaleIcon("icons/card_back.png");
+    private boolean isShowing;
 
-    CardButton(String icon, ActionListener actionListener) {
-        frontIcon = new ImageIcon(new ImageIcon(icon)
-                .getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH)); // scales the icon
-        this.setIcon(new ImageIcon(frontIcon.getImage()));
+    CardButton(String frontIcon) {
+        this.frontIcon = scaleIcon(frontIcon);
         this.setFocusable(false); // removes the dotted lines around the icon
         this.setBackground(Color.white);
-        this.addActionListener(actionListener);
-        Border border = BorderFactory.createLineBorder(Color.black); // creates a border for the label
-        this.setBorder(border);
+        this.showBack(); // card starts face down
+        this.addActionListener(e -> showFront());
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+    }
+
+    public void showFront() {
+        this.setIcon(new ImageIcon(frontIcon.getImage()));
+        isShowing = true;
+    }
+
+    public void showBack() {
+        this.setIcon(new ImageIcon(backIcon.getImage()));
+        isShowing = false;
     }
 
     public boolean getIsShowing() {
@@ -28,6 +34,14 @@ public class CardButton extends JButton {
 
     public void setIsShowing(boolean showing) {
         isShowing = showing;
+    }
+
+    public ImageIcon getFrontIcon() {
+        return frontIcon;
+    }
+
+    private ImageIcon scaleIcon(String icon) {
+        return new ImageIcon(new ImageIcon(icon).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
     }
 
 }

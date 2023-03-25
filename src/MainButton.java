@@ -13,6 +13,7 @@ public class MainButton extends JButton {
         this.setFont(new Font(FONT_NAME, Font.PLAIN, 20));
         this.setBackground(color);
         this.setBounds(200, verticalPos, 400, 50);
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.addActionListener(actionListener);
     }
 

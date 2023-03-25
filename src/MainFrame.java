@@ -56,7 +56,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         // BUTTONS
         playButton = new MainButton("New Game", GAME_YELLOW, 250, this);
-        replayButton = new MainButton("Replay Game", GAME_ORANGE, 350, this);
+        replayButton = new MainButton("Replay Last Game", GAME_ORANGE, 350, this);
         highScoresButton = new MainButton("High Scores", GAME_RED, 450, this);
         settingsButton = new MainButton("Settings", GAME_DEEP_RED, 550, this);
 
