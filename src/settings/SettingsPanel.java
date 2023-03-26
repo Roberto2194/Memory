@@ -3,7 +3,6 @@ package src.settings;
 import src.TitleLabel;
 
 import javax.swing.*;
-
 import java.awt.*;
 
 import static src.utility.GameColors.*;

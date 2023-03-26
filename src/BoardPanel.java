@@ -2,14 +2,20 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-import static src.utility.GameIcons.*;
+import static src.utility.GameIcons.gameIcons;
 
 /**
  * The Panel in which the actual game plays out
  */
-public class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel implements ActionListener {
+
+    boolean cardShowing;
+    Card firstCard;
+    Card secondCard;
 
     public BoardPanel(int rows, int cols, int timer) {
         System.out.println("Board panel timer: " + timer);
@@ -95,7 +101,31 @@ public class BoardPanel extends JPanel {
      */
     private void drawBoard(Card[] cards) {
         for (Card card : cards) {
+            card.addActionListener(this);
             this.add(card);
+        }
+    }
+
+    // TODO: - COMPARING FIRST AND SECOND CARD FOR EQUALITY
+    //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
+    //  2 - Otherwise if they have the same front, then leave them face up.
+    //  In both cases increase the flip count (and save the move to file on a worker thread).
+    //  3 - If all cards are flipped up, then end the game and load the files with the top 5-scores.
+    //  if the current game has a higher score than any of the top 5 ones, save it to file and display it.
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!cardShowing) {
+            firstCard = (Card) e.getSource();
+            System.out.println("First card selected " + firstCard.getIcon().toString());
+            cardShowing = true;
+        } else {
+            secondCard = (Card) e.getSource();
+            System.out.println("Second card selected " + secondCard.getIcon().toString());
+
+            if (secondCard.equals(firstCard)) {
+                System.out.println("First and second card are equal");
+            }
+            cardShowing = false;
         }
     }
 

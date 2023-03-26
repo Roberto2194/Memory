@@ -7,12 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         new MainFrame();
-
-        // TODO: 1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
-        //  2 - Otherwise if they have the same front, then leave them face up.
-        //  In both cases increase the flip count (and save the move to file on a worker thread)
-        //  3 - If all cards are flipped up, then end the game and load the files with the top 5-scores.
-        //  if the current game has a higher score than any of the top 5 ones, save it to file and display it.
     }
 
     /**
