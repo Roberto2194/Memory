@@ -1,5 +1,7 @@
 package src;
 
+import src.settings.SettingsPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,6 +13,10 @@ import static src.GameIcons.*;
 // color palette used: https://colors.muz.li/palette/072448/54d2d2/ffcb00/f8aa4b/ff6150
 
 public class MainFrame extends JFrame {
+
+    private int timer;
+    private int rows;
+    private int cols;
 
     MainFrame() {
         // MAIN FRAME
@@ -29,7 +35,8 @@ public class MainFrame extends JFrame {
     }
 
     private void openBoardPanel() {
-        BoardPanel boardPanel = new BoardPanel(4, 4);
+        BoardPanel boardPanel = new BoardPanel(rows, cols, timer);
+
         this.setContentPane(boardPanel);
         this.revalidate();
     }
@@ -37,7 +44,12 @@ public class MainFrame extends JFrame {
     private void openSettingsPanel() {
         SettingsPanel settingsPanel = new SettingsPanel();
 
-        MainButton settingsSubmitButton = new MainButton(GAME_SUBMIT_BUTTON, GAME_DEEP_RED_COLOR, 600, (e -> openHomePanel()));
+        MainButton settingsSubmitButton = new MainButton(GAME_SUBMIT_BUTTON, GAME_DEEP_RED_COLOR, 600, (e -> {
+            openHomePanel();
+            timer = settingsPanel.getTimer();
+            rows = settingsPanel.getRows();
+            cols = settingsPanel.getCols();
+        }));
         settingsPanel.add(settingsSubmitButton);
 
         this.setContentPane(settingsPanel);

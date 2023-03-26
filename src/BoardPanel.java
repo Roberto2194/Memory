@@ -8,7 +8,8 @@ import static src.GameIcons.*;
 
 public class BoardPanel extends JPanel {
 
-    BoardPanel(int rows, int cols) {
+    BoardPanel(int rows, int cols, int timer) {
+        System.out.println("Board panel timer: " + timer);
 
         this.setLayout(new GridLayout(rows, cols));
 

@@ -6,7 +6,7 @@ import static src.GameConstants.*;
 
 public class TitleLabel extends JLabel {
 
-    TitleLabel(String title, int xCoord, String icon) {
+    public TitleLabel(String title, int xCoord, String icon) {
         this.setText(title);
         this.setForeground(Color.white); // changes the color of the label
         this.setFont(new Font(GAME_FONT, Font.BOLD, 50)); // changes the font of the label
