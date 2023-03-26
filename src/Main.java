@@ -8,9 +8,7 @@ public class Main {
     public static void main(String[] args) {
         new MainFrame();
 
-        // TODO: 0 - load random icons when starting a new game. Make sure that there are 2 pairs of each icon,
-        //  and that the user is able to score points if 2 cards are reveled with the same icon.
-        //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
+        // TODO: 1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
         //  2 - Otherwise if they have the same front, then leave them face up.
         //  In both cases increase the flip count (and save the move to file on a worker thread)
         //  3 - If all cards are flipped up, then end the game and load the files with the top 5-scores.

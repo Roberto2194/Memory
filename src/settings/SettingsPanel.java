@@ -4,6 +4,8 @@ import src.TitleLabel;
 
 import javax.swing.*;
 
+import java.awt.*;
+
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
@@ -26,24 +28,32 @@ public class SettingsPanel extends JPanel {
         this.add(titleLabel);
 
         SettingsLabel timerLabel = new SettingsLabel(GAME_TIMER, 75, 225);
-        SettingsSlider settingsSlider = new SettingsSlider(3, 225, 225);
+        SettingsSlider settingsSlider = new SettingsSlider(timer, 225, 225);
         settingsSlider.addChangeListener(e -> this.timer = settingsSlider.getValue());
         this.add(timerLabel);
         this.add(settingsSlider);
 
         SettingsLabel rowsLabel = new SettingsLabel(GAME_ROWS, 115, 325);
-        SettingsTextField rowsTextField = new SettingsTextField("4", 225, 325);
-        rowsTextField.getDocument().addDocumentListener((SimpleDocumentListener) e -> this.rows = checkIntegerValue(rowsTextField.getText()));
+        SettingsTextField rowsTextField = new SettingsTextField(Integer.toString(rows), 225, 325);
+        rowsTextField.getDocument().addDocumentListener((SimpleDocumentListener) e ->
+                this.rows = checkIntegerValue(rowsTextField.getText())
+        );
         this.add(rowsLabel);
         this.add(rowsTextField);
 
         SettingsLabel colsLabel = new SettingsLabel(GAME_COLUMNS, 75, 425);
-        SettingsTextField colsTextField = new SettingsTextField("4", 225, 425);
-        colsTextField.getDocument().addDocumentListener((SimpleDocumentListener) e -> this.cols = checkIntegerValue(colsTextField.getText()));
+        SettingsTextField colsTextField = new SettingsTextField(Integer.toString(cols), 225, 425);
+        colsTextField.getDocument().addDocumentListener((SimpleDocumentListener) e ->
+                this.cols = checkIntegerValue(colsTextField.getText())
+        );
         this.add(colsLabel);
         this.add(colsTextField);
 
-        // DISCLAIMER LABEL
+        JLabel disclaimerLabel = new JLabel();
+        disclaimerLabel.setText(GAME_DISCLAIMER_CONFIGURATION);
+        disclaimerLabel.setBounds(200, 475, 400, 100);
+        disclaimerLabel.setForeground(Color.white);
+        this.add(disclaimerLabel);
 
         this.setVisible(true);
     }
@@ -61,11 +71,19 @@ public class SettingsPanel extends JPanel {
         try {
             parsedInt = Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please insert a number", "Invalid input", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Invalid input: " + e);
+            JOptionPane.showMessageDialog(
+                    null,
+                    GAME_INSERT_NUMBER_MESSAGE,
+                    GAME_INSERT_NUMBER_TITLE,
+                    JOptionPane.ERROR_MESSAGE
+            );
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Found an unknown exception", "Unexpected error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Unexpected error" + e);
+            JOptionPane.showMessageDialog(
+                    null,
+                    GAME_UNKNOWN_EXCEPTION_MESSAGE,
+                    GAME_UNKNOWN_EXCEPTION_TITLE,
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
         return parsedInt;
     }

@@ -6,6 +6,8 @@ import src.settings.SettingsPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
@@ -18,14 +20,19 @@ import static src.utility.GameIcons.*;
  * The container class of the whole application,
  * used to manage navigation between the Panels.
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener {
 
+    private SettingsPanel settingsPanel;
+    private MainButton settingsSubmitButton;
+    private MainButton playButton;
+    private MainButton highScoresButton;
+    private MainButton replayButton;
+    private MainButton settingsButton;
     private int timer = 3;
     private int rows = 4;
     private int cols = 4;
 
     public MainFrame() {
-        // MAIN FRAME
         this.setTitle(GAME_TITLE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // with this setting, when we hit the X button, the game is going to terminate
         this.setResizable(false); // prevents frame from being resized
@@ -48,14 +55,9 @@ public class MainFrame extends JFrame {
     }
 
     private void openSettingsPanel() {
-        SettingsPanel settingsPanel = new SettingsPanel();
+        settingsPanel = new SettingsPanel();
 
-        MainButton settingsSubmitButton = new MainButton(GAME_SUBMIT_BUTTON, GAME_DEEP_RED_COLOR, 600, (e -> {
-            openHomePanel();
-            timer = settingsPanel.getTimer();
-            rows = settingsPanel.getRows();
-            cols = settingsPanel.getCols();
-        }));
+        settingsSubmitButton = new MainButton(GAME_SUBMIT_BUTTON, GAME_DEEP_RED_COLOR, 600, this);
         settingsPanel.add(settingsSubmitButton);
 
         this.setContentPane(settingsPanel);
@@ -65,10 +67,10 @@ public class MainFrame extends JFrame {
     private void openHomePanel() {
         HomePanel homePanel = new HomePanel();
 
-        MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
-        MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
-        MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openBoardPanel()));
-        MainButton settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
+        playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
+        replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
+        highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openBoardPanel()));
+        settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
 
         homePanel.add(playButton);
         homePanel.add(replayButton);
@@ -77,6 +79,17 @@ public class MainFrame extends JFrame {
 
         this.setContentPane(homePanel);
         this.revalidate();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == settingsSubmitButton) {
+            openHomePanel();
+            timer = settingsPanel.getTimer();
+            rows = settingsPanel.getRows();
+            cols = settingsPanel.getCols();
+            settingsButton.setEnabled(false);
+        }
     }
 
 }

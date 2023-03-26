@@ -13,5 +13,11 @@ public class GameConstants {
     public static final String GAME_ROWS = "Rows: ";
     public static final String GAME_COLUMNS = "Columns: ";
     public static final String GAME_SUBMIT_BUTTON = "Submit";
+    public static final String GAME_INSERT_NUMBER_MESSAGE = "Please insert a number";
+    public static final String GAME_INSERT_NUMBER_TITLE = "Invalid input";
+    public static final String GAME_UNKNOWN_EXCEPTION_MESSAGE = "Found an unknown exception";
+    public static final String GAME_UNKNOWN_EXCEPTION_TITLE = "Unexpected error";
+    public static final String GAME_DISCLAIMER_CONFIGURATION = "Submitting an invalid configuration will result in the default 4x4 board";
+
 
 }
