@@ -5,6 +5,10 @@ import java.awt.*;
 
 import static src.utility.GameIcons.*;
 
+/**
+ * The Card ADT whose goal is to mimic the behaviour of an actual card.
+ * It has two sides, both having an icon attached to it: frontIcon and backIcon.
+ */
 public class Card extends JButton {
 
     private final ImageIcon frontIcon;

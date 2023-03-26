@@ -1,8 +1,5 @@
 package src.utility;
 
-import java.awt.*;
-import java.util.Random;
-
 public class GameIcons {
 
     public static final String GAME_APPLE = "icons/apple.png";

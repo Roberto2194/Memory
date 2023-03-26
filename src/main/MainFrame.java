@@ -1,5 +1,7 @@
-package src;
+package src.main;
 
+import src.BoardPanel;
+import src.HomePanel;
 import src.settings.SettingsPanel;
 
 import javax.swing.*;
@@ -12,13 +14,17 @@ import static src.utility.GameIcons.*;
 // fruit icons created by Smashicons - Flaticon: https://www.flaticon.com/free-icons/fruit
 // color palette used: https://colors.muz.li/palette/072448/54d2d2/ffcb00/f8aa4b/ff6150
 
+/**
+ * The container class of the whole application,
+ * used to manage navigation between the Panels.
+ */
 public class MainFrame extends JFrame {
 
     private int timer = 3;
     private int rows = 4;
     private int cols = 4;
 
-    MainFrame() {
+    public MainFrame() {
         // MAIN FRAME
         this.setTitle(GAME_TITLE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // with this setting, when we hit the X button, the game is going to terminate

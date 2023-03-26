@@ -6,9 +6,12 @@ import java.util.Random;
 
 import static src.utility.GameIcons.*;
 
+/**
+ * The Panel in which the actual game plays out
+ */
 public class BoardPanel extends JPanel {
 
-    BoardPanel(int rows, int cols, int timer) {
+    public BoardPanel(int rows, int cols, int timer) {
         System.out.println("Board panel timer: " + timer);
         System.out.println("Board panel rows: " + rows);
         System.out.println("Board panel cols: " + cols);

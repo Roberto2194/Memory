@@ -3,6 +3,11 @@ package src.settings;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+/**
+ * A cleaner solution over the clunky DocumentListener
+ * provided by Java. We only need to implement the
+ * insertUpdate method for our TextFields.
+ */
 @FunctionalInterface
 public interface SimpleDocumentListener extends DocumentListener {
     void update(DocumentEvent e);

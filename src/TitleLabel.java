@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import static src.utility.GameConstants.*;
 
+/**
+ * The generic component of the Title
+ * Label seen on top of each Panel.
+ */
 public class TitleLabel extends JLabel {
 
     public TitleLabel(String title, int xCoord, String icon) {

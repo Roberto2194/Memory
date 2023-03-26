@@ -8,6 +8,10 @@ import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
 
+/**
+ * The Panel for managing both the timer
+ * and the configuration of the board.
+ */
 public class SettingsPanel extends JPanel {
 
     private int timer = 3;
