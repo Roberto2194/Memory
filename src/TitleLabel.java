@@ -2,7 +2,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import static src.GameConstants.*;
+import static src.utility.GameConstants.*;
 
 public class TitleLabel extends JLabel {
 

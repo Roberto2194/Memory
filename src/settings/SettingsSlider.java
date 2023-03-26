@@ -3,15 +3,15 @@ package src.settings;
 import javax.swing.*;
 import java.awt.*;
 
-import static src.GameColors.*;
-import static src.GameConstants.*;
+import static src.utility.GameColors.*;
+import static src.utility.GameConstants.*;
 
 public class SettingsSlider extends JSlider {
 
-    public SettingsSlider(int xCoord, int yCoord) {
+    public SettingsSlider(int value, int xCoord, int yCoord) {
         this.setMinimum(0);
         this.setMaximum(6);
-        this.setValue(3);
+        this.setValue(value);
         this.setBounds(xCoord, yCoord, 350, 50);
         this.setPaintTicks(true); // the little signs that show the value
         this.setMajorTickSpacing(1); // the spacing between the value signs on the slider

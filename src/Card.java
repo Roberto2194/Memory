@@ -1,29 +1,50 @@
 package src;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class Card {
+import static src.utility.GameIcons.*;
 
-    private final char front;
-    private final char back = 'X';
-    private boolean isShowing = false;
+public class Card extends JButton {
 
-    public Card(char front) {
-        this.front = front;
+    private final ImageIcon frontIcon;
+    private final ImageIcon backIcon = scaleIcon(GAME_CARD_BACK);
+    private boolean isShowing;
+
+    Card(String frontIcon) {
+        this.frontIcon = scaleIcon(frontIcon);
+        this.setFocusable(false); // removes the dotted lines around the icon
+        this.setBackground(Color.white);
+        this.showBack(); // cards start face down
+        this.addActionListener(e -> showFront());
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+    }
+
+    public void showFront() {
+        this.setIcon(new ImageIcon(frontIcon.getImage()));
+        isShowing = true;
+    }
+
+    public void showBack() {
+        this.setIcon(new ImageIcon(backIcon.getImage()));
+        isShowing = false;
     }
 
     public boolean getIsShowing() {
         return isShowing;
     }
 
-    public void setIsShowing(boolean showing) {
-        isShowing = showing;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
+        Card that = (Card) o;
+        return this.frontIcon == that.frontIcon;
     }
 
-    @Override
-    public String toString() {
-        if (this.isShowing) return Character.toString(this.front);
-        else return Character.toString(this.back);
+    private ImageIcon scaleIcon(String icon) {
+        return new ImageIcon(new ImageIcon(icon).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
     }
 
 }

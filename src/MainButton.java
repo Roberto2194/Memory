@@ -3,7 +3,7 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import static src.GameConstants.*;
+import static src.utility.GameConstants.*;
 
 public class MainButton extends JButton {
 

@@ -1,4 +1,4 @@
-package src;
+package src.utility;
 
 public class GameConstants {
 

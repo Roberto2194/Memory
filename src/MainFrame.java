@@ -5,18 +5,18 @@ import src.settings.SettingsPanel;
 import javax.swing.*;
 import java.awt.*;
 
-import static src.GameColors.*;
-import static src.GameConstants.*;
-import static src.GameIcons.*;
+import static src.utility.GameColors.*;
+import static src.utility.GameConstants.*;
+import static src.utility.GameIcons.*;
 
 // fruit icons created by Smashicons - Flaticon: https://www.flaticon.com/free-icons/fruit
 // color palette used: https://colors.muz.li/palette/072448/54d2d2/ffcb00/f8aa4b/ff6150
 
 public class MainFrame extends JFrame {
 
-    private int timer;
-    private int rows;
-    private int cols;
+    private int timer = 3;
+    private int rows = 4;
+    private int cols = 4;
 
     MainFrame() {
         // MAIN FRAME

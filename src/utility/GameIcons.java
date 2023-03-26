@@ -1,4 +1,4 @@
-package src;
+package src.utility;
 
 import java.awt.*;
 import java.util.Random;

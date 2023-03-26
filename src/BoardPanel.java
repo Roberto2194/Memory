@@ -4,17 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-import static src.GameIcons.*;
+import static src.utility.GameIcons.*;
 
 public class BoardPanel extends JPanel {
 
     BoardPanel(int rows, int cols, int timer) {
         System.out.println("Board panel timer: " + timer);
+        System.out.println("Board panel rows: " + rows);
+        System.out.println("Board panel cols: " + cols);
 
         this.setLayout(new GridLayout(rows, cols));
 
         String[] icons = makeIcons(rows, cols);
-        CardButton[] cards = createCards(icons);
+        Card[] cards = createCards(icons);
         shuffleCards(cards);
         drawBoard(cards);
 
@@ -33,9 +35,11 @@ public class BoardPanel extends JPanel {
         String[] icons = new String[rows * cols];
         // we add two of the same symbol to the array
         // this is going to help us when we create the cards
+        int iconsCounter = 0;
         for (int i = 0; i < icons.length; i = i + 2) {
-            icons[i] = gameIcons[i];
-            icons[i + 1] = gameIcons[i];
+            icons[i] = gameIcons[iconsCounter];
+            icons[i + 1] = gameIcons[iconsCounter];
+            iconsCounter++;
         }
 
         return icons;
@@ -47,12 +51,12 @@ public class BoardPanel extends JPanel {
      * @param icons the array of icons
      * @return the array of cards created
      */
-    private CardButton[] createCards(String[] icons) {
-        CardButton[] cards = new CardButton[icons.length];
+    private Card[] createCards(String[] icons) {
+        Card[] cards = new Card[icons.length];
 
         int i = 0;
         while (i < icons.length) {
-            cards[i] = new CardButton(icons[i]);
+            cards[i] = new Card(icons[i]);
             i++;
         }
 
@@ -66,7 +70,7 @@ public class BoardPanel extends JPanel {
      *
      * @param cards the cards that need to be shuffled
      */
-    private void shuffleCards(CardButton[] cards) {
+    private void shuffleCards(Card[] cards) {
         Random random = new Random();
 
         int i = 0;
@@ -74,7 +78,7 @@ public class BoardPanel extends JPanel {
             // Pick a random index
             int index = random.nextInt(cards.length);
             // Swap cards[i] with the element at random index
-            CardButton temp = cards[i];
+            Card temp = cards[i];
             cards[i] = cards[index];
             cards[index] = temp;
             i++;
@@ -86,12 +90,10 @@ public class BoardPanel extends JPanel {
      *
      * @param cards the array of cards to be displayed
      */
-    private void drawBoard(CardButton[] cards) {
-        for (CardButton card : cards) {
+    private void drawBoard(Card[] cards) {
+        for (Card card : cards) {
             this.add(card);
         }
     }
-
-
 
 }
