@@ -28,9 +28,9 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
     }
 
-    private void openGamePanel() {
-        GamePanel gamePanel = new GamePanel(4, 4);
-        this.setContentPane(gamePanel);
+    private void openBoardPanel() {
+        BoardPanel boardPanel = new BoardPanel(4, 4);
+        this.setContentPane(boardPanel);
         this.revalidate();
     }
 
@@ -47,9 +47,9 @@ public class MainFrame extends JFrame {
     private void openHomePanel() {
         HomePanel homePanel = new HomePanel();
 
-        MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openGamePanel()));
-        MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openGamePanel()));
-        MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openGamePanel()));
+        MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
+        MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
+        MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openBoardPanel()));
         MainButton settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
 
         homePanel.add(playButton);

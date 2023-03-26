@@ -9,7 +9,7 @@ import static src.GameIcons.GAME_MEMORY_LOGO;
 public class HomePanel extends JPanel {
 
     HomePanel() {
-        this.setLayout(null); // setting the layout manager to null because we're manually placing elements on frame
+        this.setLayout(null);
         this.setBackground(GAME_BLUE_COLOR);
         // TITLE LABEL
         TitleLabel titleLabel = new TitleLabel(GAME_TITLE, 175, GAME_MEMORY_LOGO);

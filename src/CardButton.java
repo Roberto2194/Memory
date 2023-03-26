@@ -15,7 +15,7 @@ public class CardButton extends JButton {
         this.frontIcon = scaleIcon(frontIcon);
         this.setFocusable(false); // removes the dotted lines around the icon
         this.setBackground(Color.white);
-        this.showBack(); // card starts face down
+        this.showBack(); // cards start face down
         this.addActionListener(e -> showFront());
         this.setBorder(BorderFactory.createLineBorder(Color.black));
     }
@@ -34,12 +34,13 @@ public class CardButton extends JButton {
         return isShowing;
     }
 
-    public void setIsShowing(boolean showing) {
-        isShowing = showing;
-    }
-
-    public ImageIcon getFrontIcon() {
-        return frontIcon;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
+        CardButton that = (CardButton) o;
+        return this.frontIcon == that.frontIcon;
     }
 
     private ImageIcon scaleIcon(String icon) {

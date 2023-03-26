@@ -82,16 +82,14 @@ public class Main {
         //Draw the board here with the two revealed cards
         drawBoard(board);
 
-        // TODO:
+        // TODO: -
+        //  0 - load random icons when starting a new game. Make sure that there are 2 pairs of each icon,
+        //  and that the user is able to score points if 2 cards are reveled with the same icon.
         //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
         //  2 - Otherwise if they have the same front, then leave them face up.
-        //  In both cases increase the flip count, and save the move to file on a worker thread.
+        //  In both cases increase the flip count (and save the move to file on a worker thread)
         //  3 - If all cards are flipped up, then end the game and load the files with the top 5-scores.
         //  if the current game has a higher score than any of the top 5 ones, save it to file and display it.
-        //  4 - At the beginning of the game the player can choose to:
-        //      "start a new game",
-        //      "replay most recent game" -> which loads the most recent game saved from file
-        //      "settings" -> we can change both the time when cards are faceUp and the grid configuration
     }
 
     /**
