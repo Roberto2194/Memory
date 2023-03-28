@@ -23,7 +23,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     Card[] cards;
     int timer;
 
-    public BoardPanel(int rows, int cols, int timer) {
+    public BoardPanel(int rows, int cols, int timer, int[] highScores) {
         this.setLayout(new GridLayout(rows, cols));
         this.timer = timer * 1000; //
 

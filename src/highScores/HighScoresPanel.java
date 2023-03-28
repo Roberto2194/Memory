@@ -13,6 +13,9 @@ import static src.utility.GameIcons.*;
 
 public class HighScoresPanel extends JPanel {
 
+    int[] highScores;
+    int arrayIndex;
+
     public HighScoresPanel() {
         this.setBackground(GAME_BLUE_COLOR);
         this.setLayout(null);
@@ -20,6 +23,8 @@ public class HighScoresPanel extends JPanel {
         ArrayList<Character> scores = readFromFile();
         //this contains at each position a different score string:
         String[] scoreLabels = buildLabels(scores);
+        highScores = buildHighScores(scoreLabels, arrayIndex);
+        fillEmptyPositions(scoreLabels, arrayIndex);
 
         TitleLabel titleLabel = new TitleLabel(GAME_HIGH_SCORES, 190, GAME_HIGH_SCORES_LOGO);
         this.add(titleLabel);
@@ -98,14 +103,55 @@ public class HighScoresPanel extends JPanel {
             }
         }
 
+        this.arrayIndex = arrayIndex;
+
+        return scoresArray;
+    }
+
+    /**
+     * Fills the empty positions of the array with a set string
+     *
+     * @param scoresArray the array we want to fill the positions with
+     * @param arrayIndex  the index at which we should fill the empty positions
+     */
+    private void fillEmptyPositions(String[] scoresArray, int arrayIndex) {
         // fills the empty positions of the array (if any)
         if (arrayIndex <= 4) {
             for (int i = arrayIndex; i <= 4; i++) {
                 scoresArray[i] = GAME_NO_SCORE_RECORDED_YET;
             }
         }
+    }
 
-        return scoresArray;
+    /**
+     * Builds an array of integers containing the high
+     * scores red from file
+     *
+     * @return the array of integers containing the high scores
+     */
+    private int[] buildHighScores(String[] scores, int arrayIndex) {
+        int[] highScores = new int[arrayIndex];
+        StringBuilder scoreString = new StringBuilder();
+
+        int highScoresIndex = 0;
+        for (String score : scores) {
+            if (score == null) break;
+            for (int i = 0; i < score.length(); i++) {
+                if (score.charAt(i) == ' ') {
+                    highScores[highScoresIndex] = Integer.parseInt(String.valueOf(scoreString));
+                    scoreString = new StringBuilder();
+                    highScoresIndex++;
+                    break;
+                }
+                scoreString.append(score.charAt(i));
+            }
+        }
+
+        return highScores;
+    }
+
+    public int[] getHighScores() {
+        return highScores;
     }
 
 }

@@ -9,6 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
@@ -25,7 +29,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private SettingsPanel settingsPanel;
     private MainButton settingsSubmitButton;
-    private MainButton settingsButton;
+    private HighScoresPanel highScoresPanel;
+    private MainButton highScoresBackButton;
+    private int[] highScores;
     private int timer = 3;
     private int rows = 4;
     private int cols = 4;
@@ -46,16 +52,17 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void openBoardPanel() {
-        BoardPanel boardPanel = new BoardPanel(rows, cols, timer);
+        BoardPanel boardPanel = new BoardPanel(rows, cols, timer, highScores);
 
         this.setContentPane(boardPanel);
         this.revalidate();
     }
 
     private void openHighScoresPanel() {
-        HighScoresPanel highScoresPanel = new HighScoresPanel();
+        highScoresPanel = new HighScoresPanel();
 
-        MainButton highScoresBackButton = new MainButton(GAME_BACK_BUTTON, GAME_RED_COLOR, 600, this);
+        highScoresBackButton = new MainButton(GAME_BACK_BUTTON, GAME_RED_COLOR, 600, this);
+        highScoresBackButton.setFocusable(false);
         highScoresPanel.add(highScoresBackButton);
 
         this.setContentPane(highScoresPanel);
@@ -78,7 +85,7 @@ public class MainFrame extends JFrame implements ActionListener {
         MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
         MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
         MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openHighScoresPanel()));
-        settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
+        MainButton settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
 
         homePanel.add(playButton);
         homePanel.add(replayButton);
@@ -92,12 +99,15 @@ public class MainFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         openHomePanel();
-
         if (e.getSource() == settingsSubmitButton) {
             timer = settingsPanel.getTimer();
             rows = settingsPanel.getRows();
             cols = settingsPanel.getCols();
-            settingsButton.setEnabled(false);
+        } else if (e.getSource() == highScoresBackButton) {
+            // TODO: - WHEN THE USER OPENS THE APP WITHOUT GOING INTO THE HIGH SCORES PANEL,
+            //  AS OF NOW, THE highScores ARRAY REMAINS EMPTY.
+            highScores = highScoresPanel.getHighScores();
+            for (int score : highScores) { System.out.println(score); }
         }
     }
 
