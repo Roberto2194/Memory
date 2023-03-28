@@ -1,6 +1,7 @@
 package src.main;
 
 import src.BoardPanel;
+import src.highScores.HighScoresPanel;
 import src.HomePanel;
 import src.settings.SettingsPanel;
 
@@ -24,9 +25,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private SettingsPanel settingsPanel;
     private MainButton settingsSubmitButton;
-    private MainButton playButton;
-    private MainButton highScoresButton;
-    private MainButton replayButton;
     private MainButton settingsButton;
     private int timer = 3;
     private int rows = 4;
@@ -54,6 +52,17 @@ public class MainFrame extends JFrame implements ActionListener {
         this.revalidate();
     }
 
+    private void openHighScoresPanel() {
+        // TODO: - FIX NUMBER OF FLIPS
+        HighScoresPanel highScoresPanel = new HighScoresPanel(rows, cols, 10);
+
+        MainButton highScoresBackButton = new MainButton(GAME_BACK_BUTTON, GAME_RED_COLOR, 600, this);
+        highScoresPanel.add(highScoresBackButton);
+
+        this.setContentPane(highScoresPanel);
+        this.revalidate();
+    }
+
     private void openSettingsPanel() {
         settingsPanel = new SettingsPanel();
 
@@ -67,9 +76,9 @@ public class MainFrame extends JFrame implements ActionListener {
     private void openHomePanel() {
         HomePanel homePanel = new HomePanel();
 
-        playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
-        replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
-        highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openBoardPanel()));
+        MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
+        MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
+        MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openHighScoresPanel()));
         settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
 
         homePanel.add(playButton);
@@ -83,8 +92,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        openHomePanel();
+
         if (e.getSource() == settingsSubmitButton) {
-            openHomePanel();
             timer = settingsPanel.getTimer();
             rows = settingsPanel.getRows();
             cols = settingsPanel.getCols();

@@ -16,16 +16,15 @@ public class BoardPanel extends JPanel implements ActionListener {
     boolean cardShowing;
     Card firstCard;
     Card secondCard;
+    int timer;
+    Card[] cards;
 
     public BoardPanel(int rows, int cols, int timer) {
-        System.out.println("Board panel timer: " + timer);
-        System.out.println("Board panel rows: " + rows);
-        System.out.println("Board panel cols: " + cols);
-
         this.setLayout(new GridLayout(rows, cols));
+        this.timer = timer * 1000; //
 
         String[] icons = makeIcons(rows, cols);
-        Card[] cards = createCards(icons);
+        cards = createCards(icons);
         shuffleCards(cards);
         drawBoard(cards);
 
@@ -95,7 +94,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Draws the board by adding cards to the container
+     * Draws the board by adding cards to the container,
+     * and adds to each card an action listener.
      *
      * @param cards the array of cards to be displayed
      */
@@ -116,16 +116,29 @@ public class BoardPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (!cardShowing) {
             firstCard = (Card) e.getSource();
-            System.out.println("First card selected " + firstCard.getIcon().toString());
+            System.out.println("First card selected " + firstCard.getName());
+            firstCard.showFront();
             cardShowing = true;
+            for (Card card : cards) { card.setEnabled(true);}
         } else {
             secondCard = (Card) e.getSource();
-            System.out.println("Second card selected " + secondCard.getIcon().toString());
-
-            if (secondCard.equals(firstCard)) {
-                System.out.println("First and second card are equal");
-            }
+            System.out.println("Second card selected " + secondCard.getName());
             cardShowing = false;
+            for (Card card : cards) { card.setEnabled(false);}
+            try {
+                Thread.sleep(500L);
+                secondCard.showFront();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
+                    cardShowing = false;
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }).start();
         }
     }
 

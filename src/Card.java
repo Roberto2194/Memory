@@ -2,6 +2,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 import static src.utility.GameIcons.*;
 
@@ -17,25 +18,29 @@ public class Card extends JButton {
 
     Card(String frontIcon) {
         this.frontIcon = scaleIcon(frontIcon);
+        this.setName(frontIcon); // setting as a name the icon path
         this.setFocusable(false); // removes the dotted lines around the icon
         this.setBackground(Color.white);
         this.showBack(); // cards start face down
-        this.addActionListener(e -> showFront());
         this.setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
     public void showFront() {
-        this.setIcon(new ImageIcon(frontIcon.getImage()));
+        this.setIcon(this.frontIcon);
         isShowing = true;
     }
 
     public void showBack() {
-        this.setIcon(new ImageIcon(backIcon.getImage()));
+        this.setIcon(this.backIcon);
         isShowing = false;
     }
 
     public boolean getIsShowing() {
         return isShowing;
+    }
+
+    public ImageIcon getFrontIcon() {
+        return frontIcon;
     }
 
     @Override
@@ -44,7 +49,7 @@ public class Card extends JButton {
         if (o == null) return false;
         if (this.getClass() != o.getClass()) return false;
         Card that = (Card) o;
-        return this.frontIcon == that.frontIcon;
+        return Objects.equals(this.getName(), that.getName());
     }
 
     private ImageIcon scaleIcon(String icon) {
