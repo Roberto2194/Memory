@@ -18,6 +18,5 @@ public class GameConstants {
     public static final String GAME_UNKNOWN_EXCEPTION_MESSAGE = "Found an unknown exception";
     public static final String GAME_UNKNOWN_EXCEPTION_TITLE = "Unexpected error";
     public static final String GAME_DISCLAIMER_CONFIGURATION = "Submitting an invalid configuration will result in the default 4x4 board";
-
-
+    public static final String GAME_HIGH_SCORES_FILE = "high_scores.txt";
 }

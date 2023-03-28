@@ -1,6 +1,5 @@
 package src;
 
-import src.Card;
 import src.main.MainFrame;
 
 public class Main {

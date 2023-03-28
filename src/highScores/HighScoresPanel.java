@@ -1,10 +1,11 @@
 package src.highScores;
 
-import src.TitleLabel;
+import src.main.TitleLabel;
 
 import javax.swing.*;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
@@ -12,57 +13,52 @@ import static src.utility.GameIcons.*;
 
 public class HighScoresPanel extends JPanel {
 
-    public HighScoresPanel(int rows, int cols, int flips) {
+    public HighScoresPanel() {
         this.setBackground(GAME_BLUE_COLOR);
         this.setLayout(null);
+
+        ArrayList<Character> scores = readFromFile();
+        //this contains at each position a different score:
+        String[] scoreLabels = buildLabels(scores);
 
         TitleLabel titleLabel = new TitleLabel(GAME_HIGH_SCORES, 190, GAME_HIGH_SCORES_LOGO);
         this.add(titleLabel);
 
-        HighScoresLabel highScoreOne = new HighScoresLabel('1', 200, rows, cols, flips);
+        HighScoresLabel highScoreOne = new HighScoresLabel('1', scoreLabels[0], 200);
+        HighScoresLabel highScoreTwo = new HighScoresLabel('2', scoreLabels[1], 265);
+        HighScoresLabel highScoreThree = new HighScoresLabel('3', scoreLabels[2], 330);
+        HighScoresLabel highScoreFour = new HighScoresLabel('4', scoreLabels[3], 395);
+        HighScoresLabel highScoreFive = new HighScoresLabel('5', scoreLabels[4], 460);
+
         this.add(highScoreOne);
-
-        HighScoresLabel highScoreTwo = new HighScoresLabel('2', 265, rows, cols, flips);
         this.add(highScoreTwo);
-
-        HighScoresLabel highScoreThree = new HighScoresLabel('3', 330, rows, cols, flips);
         this.add(highScoreThree);
-
-        HighScoresLabel highScoreFour = new HighScoresLabel('4', 395, rows, cols, flips);
         this.add(highScoreFour);
-
-        HighScoresLabel highScoreFive = new HighScoresLabel('5', 460, rows, cols, flips);
         this.add(highScoreFive);
 
-        writeToFile();
-        readFromFile();
+        this.setVisible(true);
     }
 
-    private void writeToFile() {
-        try {
-            FileWriter fileWriter = new FileWriter("high_scores.txt");
-            fileWriter.write("12 flips on 4x4 board");
-            fileWriter.append("\n15 flips on 4x4 board");
-            fileWriter.append("\n22 flips on 6x6 board");
-            fileWriter.append("\n28 flips on 6x6 board");
-            fileWriter.append("\n32 flips on 4x4 board");
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    /**
+     * Reads the contents of the given file as a stream
+     * of characters (this is a property of FileReader),
+     * and adds each character to an array list
+     *
+     * @return the array list containing all the individual
+     * characters read from file
+     */
+    private ArrayList<Character> readFromFile() {
+        ArrayList<Character> scoresList = new ArrayList<>();
 
-    // FileReader reads the contents of a file as a stream of characters.
-    // One by one read() returns an int value which contains the byte value
-    // when read() returns -1, the is no more data to be read.
-    private void readFromFile() {
         try {
-            FileReader fileReader = new FileReader("high_scores.txt");
+            FileReader fileReader = new FileReader(GAME_HIGH_SCORES_FILE);
             int data = fileReader.read();
+            scoresList.add((char) data);
 
+            // when read() returns -1, the is no more data to be read.
             while (data != -1) {
-                System.out.print((char) data);
                 data = fileReader.read();
+                scoresList.add((char) data);
             }
 
             fileReader.close();
@@ -71,6 +67,38 @@ public class HighScoresPanel extends JPanel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return scoresList;
+    }
+
+    /**
+     * Builds each of the high scores by going through the
+     * array of characters and putting each individual
+     * score in a different position of the scoresArray
+     *
+     * @param scores the list that contains the characters read from file
+     * @return the scoresArray that contains all the individual high scores strings
+     */
+    private String[] buildLabels(ArrayList<Character> scores) {
+        String[] scoresArray = new String[5];
+        StringBuilder scoreString = new StringBuilder();
+
+        int arrayIndex = 0;
+        for (Character score : scores) {
+            // the \n appears at every eol of string
+            // the uFFFF char appears at the very last string
+            if (score != '\n' && score != '\uFFFF') {
+                scoreString.append(score);
+            } else {
+                scoresArray[arrayIndex] = String.valueOf(scoreString);
+                // we reset the string if we've reached the \n char
+                // so that we can build a new one
+                scoreString = new StringBuilder();
+                arrayIndex++;
+            }
+        }
+
+        return scoresArray;
     }
 
 }

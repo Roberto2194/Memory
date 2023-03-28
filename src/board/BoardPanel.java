@@ -1,11 +1,14 @@
-package src;
+package src.board;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
+import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
 import static src.utility.GameIcons.gameIcons;
 
 /**
@@ -13,11 +16,12 @@ import static src.utility.GameIcons.gameIcons;
  */
 public class BoardPanel extends JPanel implements ActionListener {
 
-    boolean cardShowing;
     Card firstCard;
     Card secondCard;
-    int timer;
+    boolean cardShowing;
+    int flipCount;
     Card[] cards;
+    int timer;
 
     public BoardPanel(int rows, int cols, int timer) {
         this.setLayout(new GridLayout(rows, cols));
@@ -106,6 +110,24 @@ public class BoardPanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * TODO: - IMPLEMENT IT AND WRITE THE DOCUMENTATION
+     */
+    private void writeToFile() {
+        try {
+            FileWriter fileWriter = new FileWriter(GAME_HIGH_SCORES_FILE);
+            fileWriter.write("12 flips on 4x4 board");
+            fileWriter.append("\n15 flips on 4x4 board");
+            fileWriter.append("\n22 flips on 6x6 board");
+            fileWriter.append("\n28 flips on 6x6 board");
+            fileWriter.append("\n32 flips on 4x4 board");
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     // TODO: - COMPARING FIRST AND SECOND CARD FOR EQUALITY
     //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
     //  2 - Otherwise if they have the same front, then leave them face up.
@@ -119,27 +141,13 @@ public class BoardPanel extends JPanel implements ActionListener {
             System.out.println("First card selected " + firstCard.getName());
             firstCard.showFront();
             cardShowing = true;
-            for (Card card : cards) { card.setEnabled(true);}
         } else {
             secondCard = (Card) e.getSource();
             System.out.println("Second card selected " + secondCard.getName());
+            secondCard.showFront();
             cardShowing = false;
-            for (Card card : cards) { card.setEnabled(false);}
-            try {
-                Thread.sleep(500L);
-                secondCard.showFront();
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
-            new Thread(() -> {
-                try {
-                    Thread.sleep(500);
-                    cardShowing = false;
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            }).start();
         }
+        flipCount++;
     }
 
 }

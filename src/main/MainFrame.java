@@ -1,8 +1,8 @@
 package src.main;
 
-import src.BoardPanel;
+import src.board.BoardPanel;
 import src.highScores.HighScoresPanel;
-import src.HomePanel;
+import src.home.HomePanel;
 import src.settings.SettingsPanel;
 
 import javax.swing.*;
@@ -53,8 +53,7 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void openHighScoresPanel() {
-        // TODO: - FIX NUMBER OF FLIPS
-        HighScoresPanel highScoresPanel = new HighScoresPanel(rows, cols, 10);
+        HighScoresPanel highScoresPanel = new HighScoresPanel();
 
         MainButton highScoresBackButton = new MainButton(GAME_BACK_BUTTON, GAME_RED_COLOR, 600, this);
         highScoresPanel.add(highScoresBackButton);

@@ -27,7 +27,6 @@ public class GameIcons {
     public static final String GAME_WATERMELON = "icons/watermelon.png";
     public static final String GAME_HIGH_SCORES_LOGO = "icons/high_scores_logo.png";
 
-
     public static final String[] gameIcons = {
             GAME_APPLE, GAME_AVOCADO, GAME_BANANA, GAME_CHERRIES, GAME_COCONUT,
             GAME_GRAPES, GAME_LEMON, GAME_LIME, GAME_MANGO, GAME_ORANGE,

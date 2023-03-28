@@ -1,6 +1,6 @@
 package src.settings;
 
-import src.TitleLabel;
+import src.main.TitleLabel;
 
 import javax.swing.*;
 import java.awt.*;

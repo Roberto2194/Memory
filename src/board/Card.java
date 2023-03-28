@@ -1,4 +1,4 @@
-package src;
+package src.board;
 
 import javax.swing.*;
 import java.awt.*;
