@@ -18,7 +18,7 @@ public class HighScoresPanel extends JPanel {
         this.setLayout(null);
 
         ArrayList<Character> scores = readFromFile();
-        //this contains at each position a different score:
+        //this contains at each position a different score string:
         String[] scoreLabels = buildLabels(scores);
 
         TitleLabel titleLabel = new TitleLabel(GAME_HIGH_SCORES, 190, GAME_HIGH_SCORES_LOGO);
@@ -85,16 +85,23 @@ public class HighScoresPanel extends JPanel {
 
         int arrayIndex = 0;
         for (Character score : scores) {
-            // the \n appears at every eol of string
+            // the \n char appears at every eol of string
             // the uFFFF char appears at the very last string
             if (score != '\n' && score != '\uFFFF') {
                 scoreString.append(score);
-            } else {
+            } else if (!scoreString.isEmpty()) {
                 scoresArray[arrayIndex] = String.valueOf(scoreString);
                 // we reset the string if we've reached the \n char
                 // so that we can build a new one
                 scoreString = new StringBuilder();
                 arrayIndex++;
+            }
+        }
+
+        // fills the empty positions of the array (if any)
+        if (arrayIndex <= 4) {
+            for (int i = arrayIndex; i <= 4; i++) {
+                scoresArray[i] = GAME_NO_SCORE_RECORDED_YET;
             }
         }
 

@@ -1,5 +1,1 @@
 12 flips on 4x4 board
-15 flips on 4x4 board
-22 flips on 6x6 board
-28 flips on 6x6 board
-32 flips on 4x4 board

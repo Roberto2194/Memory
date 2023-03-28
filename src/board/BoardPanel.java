@@ -127,7 +127,6 @@ public class BoardPanel extends JPanel implements ActionListener {
         }
     }
 
-
     // TODO: - COMPARING FIRST AND SECOND CARD FOR EQUALITY
     //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
     //  2 - Otherwise if they have the same front, then leave them face up.
