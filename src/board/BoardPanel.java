@@ -22,15 +22,25 @@ public class BoardPanel extends JPanel implements ActionListener {
     int flipCount;
     Card[] cards;
     int timer;
+    int[] highScores;
+    String[] scoreLabels;
+    int rows;
+    int cols;
 
-    public BoardPanel(int rows, int cols, int timer, int[] highScores) {
+    public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
         this.setLayout(new GridLayout(rows, cols));
-        this.timer = timer * 1000; //
+        this.timer = timer * 1000;
+        this.highScores = highScores;
+        this.scoreLabels = scoreLabels;
+        this.rows = rows;
+        this.cols = cols;
 
         String[] icons = makeIcons(rows, cols);
         cards = createCards(icons);
         shuffleCards(cards);
         drawBoard(cards);
+
+        writeToFile(flipCount, highScores, scoreLabels, rows, cols);
 
         this.setVisible(true);
     }
@@ -111,16 +121,29 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * TODO: - IMPLEMENT IT AND WRITE THE DOCUMENTATION
+     * Writes to file the score achieved in the current game only when
+     * better than any of the existing ones.
+     *
+     * @param flipCount the number of flips in the current game
+     * @param highScores the int array containing all the high scores recorded on file
+     * @param scoreLabels the labels of each high score
+     * @param rows the number of rows in the current game
+     * @param cols the number of columns in the current game
      */
-    private void writeToFile() {
+    private void writeToFile(int flipCount, int[] highScores, String[] scoreLabels, int rows, int cols) {
+        for (int i = 0; i < highScores.length; i++) {
+            if (flipCount < highScores[i]) {
+                highScores[i] = flipCount;
+                scoreLabels[i] = flipCount + " flips on " + rows + "x" + cols + " board";
+                break;
+            }
+        }
+
         try {
             FileWriter fileWriter = new FileWriter(GAME_HIGH_SCORES_FILE);
-            fileWriter.write("12 flips on 4x4 board");
-            fileWriter.append("\n15 flips on 4x4 board");
-            fileWriter.append("\n22 flips on 6x6 board");
-            fileWriter.append("\n28 flips on 6x6 board");
-            fileWriter.append("\n32 flips on 4x4 board");
+            for (String scoreLabel : scoreLabels) {
+                fileWriter.write(scoreLabel + "\n");
+            }
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

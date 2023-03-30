@@ -14,7 +14,6 @@ public class HighScoresPanel extends JPanel {
         this.setBackground(GAME_BLUE_COLOR);
         this.setLayout(null);
 
-
         TitleLabel titleLabel = new TitleLabel(GAME_HIGH_SCORES, 190, GAME_HIGH_SCORES_LOGO);
         this.add(titleLabel);
 

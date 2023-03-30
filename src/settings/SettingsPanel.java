@@ -52,13 +52,37 @@ public class SettingsPanel extends JPanel {
         this.add(colsLabel);
         this.add(colsTextField);
 
-        JLabel disclaimerLabel = new JLabel();
-        disclaimerLabel.setText(GAME_DISCLAIMER_CONFIGURATION);
-        disclaimerLabel.setBounds(200, 475, 400, 100);
-        disclaimerLabel.setForeground(Color.white);
-        this.add(disclaimerLabel);
+        // TODO: - NICE TO HAVE
+        //  Implement a check that verifies that the user
+        //  does not insert an odd or <4 configuration
+        /*
+        if (!isConfigurationValid(rows, cols)) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    GAME_INVALID_CONFIGURATION_MESSAGE,
+                    GAME_INVALID_CONFIGURATION_TITLE,
+                    JOptionPane.ERROR_MESSAGE
+            );
+            this.setEnabled(false);
+        }
+         */
 
         this.setVisible(true);
+    }
+
+    /**
+     * Checks whether the configuration that we get as an input
+     * from the user is valid, otherwise we can not create the board.<br>
+     * For the configuration to be valid we need at lest 4 tiles,
+     * and if so, the total number of tiles must be even.
+     *
+     * @param rows    the number of rows
+     * @param columns the number of columns
+     * @return true or false based on whether the configuration is valid or not
+     */
+    private boolean isConfigurationValid(int rows, int columns) {
+        int tiles = rows * columns;
+        return tiles % 2 == 0 && tiles >= 4;
     }
 
     /**

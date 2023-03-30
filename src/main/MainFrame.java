@@ -58,7 +58,7 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void openBoardPanel() {
-        BoardPanel boardPanel = new BoardPanel(rows, cols, timer, highScores);
+        BoardPanel boardPanel = new BoardPanel(rows, cols, timer, highScores, scoreLabels);
 
         this.setContentPane(boardPanel);
         this.revalidate();
@@ -197,12 +197,12 @@ public class MainFrame extends JFrame implements ActionListener {
      *
      * @return the array of integers containing the high scores
      */
-    private int[] buildHighScores(String[] scores, int arrayIndex) {
+    private int[] buildHighScores(String[] scoreLabels, int arrayIndex) {
         int[] highScores = new int[arrayIndex];
         StringBuilder scoreString = new StringBuilder();
 
         int highScoresIndex = 0;
-        for (String score : scores) {
+        for (String score : scoreLabels) {
             if (score == null) break;
             for (int i = 0; i < score.length(); i++) {
                 if (score.charAt(i) == ' ') {
