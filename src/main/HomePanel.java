@@ -1,6 +1,4 @@
-package src.home;
-
-import src.main.TitleLabel;
+package src.main;
 
 import javax.swing.*;
 

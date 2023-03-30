@@ -2,7 +2,6 @@ package src.main;
 
 import src.board.BoardPanel;
 import src.highScores.HighScoresPanel;
-import src.home.HomePanel;
 import src.settings.SettingsPanel;
 
 import javax.swing.*;
@@ -48,7 +47,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         openHomePanel();
 
-        ArrayList<Character> scores = readFromFile();
+        ArrayList<Character> scores = readHighScoresFromFile();
         //this contains at each position a different score string:
         scoreLabels = buildLabels(scores);
         highScores = buildHighScores(scoreLabels, arrayIndex);
@@ -120,7 +119,7 @@ public class MainFrame extends JFrame implements ActionListener {
      * @return the array list containing all the individual
      * characters read from file
      */
-    private ArrayList<Character> readFromFile() {
+    private ArrayList<Character> readHighScoresFromFile() {
         ArrayList<Character> scoresList = new ArrayList<>();
 
         try {

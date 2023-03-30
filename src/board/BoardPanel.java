@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
-import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
-import static src.utility.GameIcons.gameIcons;
+import static src.utility.GameConstants.*;
+import static src.utility.GameIcons.*;
 
 /**
  * The Panel in which the actual game plays out
@@ -41,7 +41,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         shuffleCards(cards);
         drawBoard(cards);
 
-        writeToFile(flipCount, highScores, scoreLabels, rows, cols);
+        writeHighScoresToFile();
 
         this.setVisible(true);
     }
@@ -124,20 +124,18 @@ public class BoardPanel extends JPanel implements ActionListener {
     /**
      * Writes to file the score achieved in the current game only when
      * better than any of the existing ones.
-     *
-     * @param flipCount the number of flips in the current game
-     * @param highScores the int array containing all the high scores recorded on file
-     * @param scoreLabels the labels of each high score
-     * @param rows the number of rows in the current game
-     * @param cols the number of columns in the current game
      */
-    private void writeToFile(int flipCount, int[] highScores, String[] scoreLabels, int rows, int cols) {
+    private void writeHighScoresToFile() {
         for (int i = 0; i < highScores.length; i++) {
+            // TODO: - THE LOGIC NEEDS TO BE FIXED.
+            //  Right now this just substitutes the new value at the given position.
+            //  It should instead shift the whole array by one position to the right
             if (flipCount < highScores[i]) {
                 highScores[i] = flipCount;
                 scoreLabels[i] = flipCount + " flips on " + rows + "x" + cols + " board";
                 break;
             }
+
         }
 
         try {
@@ -153,6 +151,15 @@ public class BoardPanel extends JPanel implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // TODO: - WRITE THE CURRENT GAME TO FILE
+    //  Qui abbiamo tutto l'array di carte ordinato così come viene displayato sulla board.
+    //  Possiamo accedere anche al numero di rows e cols, e quindi dedurre la configurazione della board.
+    //  In actionPerformed registriamo le sequenze di prima e seconda carta premuta.
+    //  Carte, configurzione, e sequenza sono quello che ci serve per il replay
+    private void writeCurrentGameToFile() {
+
     }
 
     // TODO: - COMPARING FIRST AND SECOND CARD FOR EQUALITY
