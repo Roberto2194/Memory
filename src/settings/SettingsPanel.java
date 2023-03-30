@@ -19,7 +19,11 @@ public class SettingsPanel extends JPanel {
     private int rows = 4;
     private int cols = 4;
 
-    public SettingsPanel() {
+    public SettingsPanel(int timer, int rows, int cols) {
+        this.timer = timer;
+        this.rows = rows;
+        this.cols = cols;
+
         this.setBackground(GAME_BLUE_COLOR);
         this.setLayout(null);
 

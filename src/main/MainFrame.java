@@ -29,9 +29,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private SettingsPanel settingsPanel;
     private MainButton settingsSubmitButton;
-    private HighScoresPanel highScoresPanel;
-    private MainButton highScoresBackButton;
-    private int[] highScores;
+    int[] highScores;
+    int arrayIndex;
+    String[] scoreLabels;
     private int timer = 3;
     private int rows = 4;
     private int cols = 4;
@@ -48,6 +48,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
         openHomePanel();
 
+        ArrayList<Character> scores = readFromFile();
+        //this contains at each position a different score string:
+        scoreLabels = buildLabels(scores);
+        highScores = buildHighScores(scoreLabels, arrayIndex);
+        fillEmptyPositions(scoreLabels, arrayIndex);
+
         this.setVisible(true);
     }
 
@@ -59,9 +65,9 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void openHighScoresPanel() {
-        highScoresPanel = new HighScoresPanel();
+        HighScoresPanel highScoresPanel = new HighScoresPanel(scoreLabels);
 
-        highScoresBackButton = new MainButton(GAME_BACK_BUTTON, GAME_RED_COLOR, 600, this);
+        MainButton highScoresBackButton = new MainButton(GAME_BACK_BUTTON, GAME_RED_COLOR, 600, this);
         highScoresBackButton.setFocusable(false);
         highScoresPanel.add(highScoresBackButton);
 
@@ -70,7 +76,7 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void openSettingsPanel() {
-        settingsPanel = new SettingsPanel();
+        settingsPanel = new SettingsPanel(timer, rows, cols);
 
         settingsSubmitButton = new MainButton(GAME_SUBMIT_BUTTON, GAME_DEEP_RED_COLOR, 600, this);
         settingsPanel.add(settingsSubmitButton);
@@ -103,12 +109,113 @@ public class MainFrame extends JFrame implements ActionListener {
             timer = settingsPanel.getTimer();
             rows = settingsPanel.getRows();
             cols = settingsPanel.getCols();
-        } else if (e.getSource() == highScoresBackButton) {
-            // TODO: - WHEN THE USER OPENS THE APP WITHOUT GOING INTO THE HIGH SCORES PANEL,
-            //  AS OF NOW, THE highScores ARRAY REMAINS EMPTY.
-            highScores = highScoresPanel.getHighScores();
-            for (int score : highScores) { System.out.println(score); }
         }
+    }
+
+    /**
+     * Reads the contents of the given file as a stream
+     * of characters (this is a property of FileReader),
+     * and adds each character to an array list
+     *
+     * @return the array list containing all the individual
+     * characters read from file
+     */
+    private ArrayList<Character> readFromFile() {
+        ArrayList<Character> scoresList = new ArrayList<>();
+
+        try {
+            FileReader fileReader = new FileReader(GAME_HIGH_SCORES_FILE);
+            int data = fileReader.read();
+            scoresList.add((char) data);
+
+            // when read() returns -1, the is no more data to be read.
+            while (data != -1) {
+                data = fileReader.read();
+                scoresList.add((char) data);
+            }
+
+            fileReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return scoresList;
+    }
+
+    /**
+     * Builds each of the high scores by going through the
+     * array of characters and putting each individual
+     * score in a different position of the scoresArray
+     *
+     * @param scores the list that contains the characters read from file
+     * @return the scoresArray that contains all the individual high scores strings
+     */
+    private String[] buildLabels(ArrayList<Character> scores) {
+        String[] scoresArray = new String[5];
+        StringBuilder scoreString = new StringBuilder();
+
+        int arrayIndex = 0;
+        for (Character score : scores) {
+            // the \n char appears at every eol of string
+            // the uFFFF char appears at the very last string
+            if (score != '\n' && score != '\uFFFF') {
+                scoreString.append(score);
+            } else if (!scoreString.isEmpty()) {
+                scoresArray[arrayIndex] = String.valueOf(scoreString);
+                // we reset the string if we've reached the \n char
+                // so that we can build a new one
+                scoreString = new StringBuilder();
+                arrayIndex++;
+            }
+        }
+
+        this.arrayIndex = arrayIndex;
+
+        return scoresArray;
+    }
+
+    /**
+     * Fills the empty positions of the array with a set string
+     *
+     * @param scoresArray the array we want to fill the positions with
+     * @param arrayIndex  the index at which we should fill the empty positions
+     */
+    private void fillEmptyPositions(String[] scoresArray, int arrayIndex) {
+        // fills the empty positions of the array (if any)
+        if (arrayIndex <= 4) {
+            for (int i = arrayIndex; i <= 4; i++) {
+                scoresArray[i] = GAME_NO_SCORE_RECORDED_YET;
+            }
+        }
+    }
+
+    /**
+     * Builds an array of integers containing the high
+     * scores red from file
+     *
+     * @return the array of integers containing the high scores
+     */
+    private int[] buildHighScores(String[] scores, int arrayIndex) {
+        int[] highScores = new int[arrayIndex];
+        StringBuilder scoreString = new StringBuilder();
+
+        int highScoresIndex = 0;
+        for (String score : scores) {
+            if (score == null) break;
+            for (int i = 0; i < score.length(); i++) {
+                if (score.charAt(i) == ' ') {
+                    highScores[highScoresIndex] = Integer.parseInt(String.valueOf(scoreString));
+                    scoreString = new StringBuilder();
+                    highScoresIndex++;
+                    break;
+                }
+                scoreString.append(score.charAt(i));
+            }
+        }
+
+        return highScores;
     }
 
 }
