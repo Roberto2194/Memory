@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
 
 import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
@@ -142,7 +143,11 @@ public class BoardPanel extends JPanel implements ActionListener {
         try {
             FileWriter fileWriter = new FileWriter(GAME_HIGH_SCORES_FILE);
             for (String scoreLabel : scoreLabels) {
-                fileWriter.write(scoreLabel + "\n");
+                if (!Objects.equals(scoreLabel, scoreLabels[scoreLabels.length - 1])) {
+                    fileWriter.write(scoreLabel + "\n");
+                } else {
+                    fileWriter.write(scoreLabel);
+                }
             }
             fileWriter.close();
         } catch (IOException e) {
