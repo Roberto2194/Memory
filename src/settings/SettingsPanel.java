@@ -1,10 +1,7 @@
 package src.settings;
 
 import src.main.TitleLabel;
-
 import javax.swing.*;
-import java.awt.*;
-
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
@@ -15,9 +12,9 @@ import static src.utility.GameIcons.*;
  */
 public class SettingsPanel extends JPanel {
 
-    private int timer = 3;
-    private int rows = 4;
-    private int cols = 4;
+    private int timer;
+    private int rows;
+    private int cols;
 
     public SettingsPanel(int timer, int rows, int cols) {
         this.timer = timer;

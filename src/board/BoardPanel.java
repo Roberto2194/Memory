@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
-
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
 

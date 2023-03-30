@@ -2,7 +2,6 @@ package src.highScores;
 
 import javax.swing.*;
 import java.awt.*;
-
 import static src.utility.GameConstants.GAME_FONT;
 
 public class HighScoresLabel extends JLabel {

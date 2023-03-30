@@ -3,7 +3,6 @@ package src.main;
 import src.board.BoardPanel;
 import src.highScores.HighScoresPanel;
 import src.settings.SettingsPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;

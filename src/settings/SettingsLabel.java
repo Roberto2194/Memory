@@ -2,7 +2,6 @@ package src.settings;
 
 import javax.swing.*;
 import java.awt.*;
-
 import static src.utility.GameConstants.*;
 
 public class SettingsLabel extends JLabel {

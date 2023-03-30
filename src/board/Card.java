@@ -3,7 +3,6 @@ package src.board;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
-
 import static src.utility.GameIcons.*;
 
 /**

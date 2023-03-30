@@ -1,12 +1,10 @@
 package src.highScores;
 
 import src.main.TitleLabel;
-
 import javax.swing.*;
-
-import static src.utility.GameColors.GAME_BLUE_COLOR;
-import static src.utility.GameConstants.GAME_HIGH_SCORES;
-import static src.utility.GameIcons.GAME_HIGH_SCORES_LOGO;
+import static src.utility.GameColors.*;
+import static src.utility.GameConstants.*;
+import static src.utility.GameIcons.*;
 
 public class HighScoresPanel extends JPanel {
 

@@ -1,10 +1,9 @@
 package src.main;
 
 import javax.swing.*;
-
-import static src.utility.GameColors.GAME_BLUE_COLOR;
-import static src.utility.GameConstants.GAME_TITLE;
-import static src.utility.GameIcons.GAME_MEMORY_LOGO;
+import static src.utility.GameColors.*;
+import static src.utility.GameConstants.*;
+import static src.utility.GameIcons.*;
 
 /**
  * The Panel seen at the start of the App.
