@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
@@ -28,6 +29,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     int rows;
     int cols;
     int highScoreIndex;
+    boolean gameOver = false;
+    HashMap<String, String> moves = new HashMap<>();
 
     public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
         this.setLayout(new GridLayout(rows, cols));
@@ -42,15 +45,15 @@ public class BoardPanel extends JPanel implements ActionListener {
         shuffleCards(cards);
         drawBoard(cards);
 
-        // TODO: - NEEDS TO BE TRIGGERED ONLY WHEN THE GAME ENDS == TRUE
-        /*
-        if (isNewHighScore()) {
-            addNewHighScore();
-            writeHighScoresToFile();
+        if (gameOver) {
+            new Thread(() -> {
+                if (isNewHighScore()) {
+                    addNewHighScore();
+                    writeHighScoresToFile();
+                }
+                writeCurrentGameToFile();
+            }).start();
         }
-         */
-
-        writeCurrentGameToFile();
 
         this.setVisible(true);
     }
@@ -203,17 +206,22 @@ public class BoardPanel extends JPanel implements ActionListener {
         }
     }
 
-    // TODO: - WRITE THE CURRENT GAME TO FILE
-    //  Qui abbiamo tutto l'array di carte ordinato così come viene displayato sulla board.
-    //  Possiamo accedere anche al numero di rows e cols, e quindi dedurre la configurazione della board.
-    //  In actionPerformed registriamo le sequenze di prima e seconda carta premuta.
-    //  Carte, configurzione, e sequenza sono quello che ci serve per il replay
+    /**
+     * Writes the following information about the current game to file:<br>
+     * 1. the number of rows and columns<br>
+     * 2. the list of cards as displayed onto the board<br>
+     * 3. the record of all the moves played by the user.
+     */
     private void writeCurrentGameToFile() {
         try {
             FileWriter fileWriter = new FileWriter(GAME_LAST_GAME_FILE);
             fileWriter.write("(" + rows + "," + cols + ")" + "\n");
             for (Card card : cards) {
-                fileWriter.write(card.getFrontIcon().getDescription() + "\n");
+                fileWriter.write(card.getName() + "\n");
+            }
+            for (String key : moves.keySet()) {
+                String value = moves.get(key);
+                fileWriter.write("(" + key + ", " + value + ")" + "\n");
             }
             fileWriter.close();
         } catch (IOException e) {
@@ -238,6 +246,9 @@ public class BoardPanel extends JPanel implements ActionListener {
             secondCard = (Card) e.getSource();
             System.out.println("Second card selected " + secondCard.getName());
             secondCard.showFront();
+            // we record the move here because this is where
+            // the first and the second card both have value:
+            moves.put(firstCard.getName(), secondCard.getName());
             cardShowing = false;
         }
         flipCount++;

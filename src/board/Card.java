@@ -21,7 +21,6 @@ public class Card extends JButton {
 
     Card(String frontIcon) {
         this.frontIcon = scaleIcon(frontIcon);
-        this.frontIcon.setDescription(frontIcon);
         this.setName(frontIcon); // setting as a name the icon path
         this.setFocusable(false); // removes the dotted lines around the icon
         this.setBackground(Color.white);
