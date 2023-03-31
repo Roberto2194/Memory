@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
+import java.util.TreeMap;
+
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
 
@@ -29,7 +31,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     int cols;
     int highScoreIndex;
     boolean gameOver = false;
-    HashMap<String, String> moves = new HashMap<>();
+    TreeMap<String, String> moves = new TreeMap<>();
 
     public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
         this.setLayout(new GridLayout(rows, cols));
@@ -43,6 +45,10 @@ public class BoardPanel extends JPanel implements ActionListener {
         cards = createCards(icons);
         shuffleCards(cards);
         drawBoard(cards);
+
+        moves.put("icons/avocado.png", "icons/banana.png");
+        moves.put("icons/banana.png", "icons/grapes.png");
+        writeCurrentGameToFile();
 
         if (gameOver) {
             new Thread(() -> {
@@ -214,13 +220,19 @@ public class BoardPanel extends JPanel implements ActionListener {
     private void writeCurrentGameToFile() {
         try {
             FileWriter fileWriter = new FileWriter(GAME_LAST_GAME_FILE);
-            fileWriter.write("(" + rows + "," + cols + ")" + "\n");
+            fileWriter.write(rows + "\n");
+            fileWriter.write(cols + "\n");
             for (Card card : cards) {
                 fileWriter.write(card.getName() + "\n");
             }
+            fileWriter.write("--------------\n");
             for (String key : moves.keySet()) {
                 String value = moves.get(key);
-                fileWriter.write("(" + key + ", " + value + ")" + "\n");
+                if (!Objects.equals(value, moves.get(moves.lastKey()))) {
+                    fileWriter.write(key + ":" + value + "\n");
+                } else {
+                    fileWriter.write(key + ":" + value);
+                }
             }
             fileWriter.close();
         } catch (IOException e) {

@@ -1,19 +1,23 @@
-(4,4)
-icons/lemon.png
+4
+4
+icons/cherries.png
+icons/cherries.png
+icons/apple.png
 icons/banana.png
 icons/avocado.png
-icons/cherries.png
-icons/banana.png
+icons/lime.png
 icons/apple.png
 icons/lemon.png
 icons/coconut.png
+icons/banana.png
 icons/grapes.png
-icons/lime.png
-icons/coconut.png
-icons/apple.png
-icons/cherries.png
 icons/avocado.png
-icons/lime.png
+icons/coconut.png
+icons/lemon.png
 icons/grapes.png
-(icons/avocado.png, icons/banana.png)
-(icons/banana.png, icons/grapes.png)
+icons/lime.png
+--------------
+icons/avocado.png:icons/banana.png
+icons/banana.png:icons/grapes.png
+icons/banana.png:icons/grapes.png
+icons/banana.png:icons/grapes.png
