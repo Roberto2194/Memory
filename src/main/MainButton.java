@@ -9,6 +9,7 @@ public class MainButton extends JButton {
 
     MainButton(String title, Color color, int verticalPos, ActionListener actionListener) {
         this.setText(title);
+        this.setFocusable(false);
         this.setFont(new Font(GAME_FONT, Font.PLAIN, 20));
         this.setBackground(color);
         this.setBounds(200, verticalPos, 400, 50);

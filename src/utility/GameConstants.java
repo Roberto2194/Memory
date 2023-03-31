@@ -20,6 +20,7 @@ public class GameConstants {
     public static final String GAME_INVALID_CONFIGURATION_MESSAGE = "Please insert a valid configuration";
     public static final String GAME_INVALID_CONFIGURATION_TITLE = "Invalid board configuration";
     public static final String GAME_HIGH_SCORES_FILE = "high_scores.txt";
+    public static final String GAME_LAST_GAME_FILE = "last_game.txt";
     public static final String GAME_NO_SCORE_RECORDED_YET = "No score recorded yet";
 
 }

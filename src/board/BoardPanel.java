@@ -27,6 +27,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     String[] scoreLabels;
     int rows;
     int cols;
+    int highScoreIndex;
 
     public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
         this.setLayout(new GridLayout(rows, cols));
@@ -41,8 +42,15 @@ public class BoardPanel extends JPanel implements ActionListener {
         shuffleCards(cards);
         drawBoard(cards);
 
-        addNewHighScore();
-        writeHighScoresToFile();
+        // TODO: - NEEDS TO BE TRIGGERED ONLY WHEN THE GAME ENDS == TRUE
+        /*
+        if (isNewHighScore()) {
+            addNewHighScore();
+            writeHighScoresToFile();
+        }
+         */
+
+        writeCurrentGameToFile();
 
         this.setVisible(true);
     }
@@ -123,47 +131,56 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * Checks whether the new score recorded is
+     * a new high score
+     *
+     * @return true or false based on whether new the score
+     * is indeed a new high score or not
+     */
+    private boolean isNewHighScore() {
+        for (int i = 0; i < highScores.length; i++) {
+            if (flipCount < highScores[i]) {
+                highScoreIndex = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Adds a new high score (if present) to the record
      * so that it can later be printed to file
      */
     private void addNewHighScore() {
-        // 1. add new high score
-        for (int i = 0; i < highScores.length; i++) {
-            flipCount = 10;
-            if (flipCount < highScores[i]) {
-                // 2. slide all elements by 1 position
-                int fSTemp;
-                int sSTemp = 0;
-                String fLTemp;
-                String sLTemp = "";
-                boolean first = true;
+        int fSTemp;
+        int sSTemp = 0;
+        String fLTemp;
+        String sLTemp = "";
+        boolean first = true;
 
-                for (int j = i; j < highScores.length - 1; j++) {
-                    if (first) {
-                        fSTemp = highScores[j];
-                        fLTemp = scoreLabels[j];
-                        highScores[j] = flipCount;
-                        scoreLabels[j] = flipCount + " flips on " + rows + "x" + cols + " board";
+        for (int j = highScoreIndex; j < highScores.length - 1; j++) {
+            if (first) {
+                fSTemp = highScores[j];
+                fLTemp = scoreLabels[j];
+                highScores[j] = flipCount;
+                scoreLabels[j] = flipCount + " flips on " + rows + "x" + cols + " board";
 
-                        sSTemp = highScores[j + 1];
-                        sLTemp = scoreLabels[j + 1];
-                        highScores[j + 1] = fSTemp;
-                        scoreLabels[j + 1] = fLTemp;
+                sSTemp = highScores[j + 1];
+                sLTemp = scoreLabels[j + 1];
+                highScores[j + 1] = fSTemp;
+                scoreLabels[j + 1] = fLTemp;
 
-                        first = false;
-                    } else {
-                        int sTemp = highScores[j + 1];
-                        String lTemp = scoreLabels[j + 1];
-                        highScores[j + 1] = sSTemp;
-                        scoreLabels[j + 1] = sLTemp;
-                        sSTemp = sTemp;
-                        sLTemp = lTemp;
-                    }
-                }
-
-                break;
+                first = false;
+            } else {
+                int sTemp = highScores[j + 1];
+                String lTemp = scoreLabels[j + 1];
+                highScores[j + 1] = sSTemp;
+                scoreLabels[j + 1] = sLTemp;
+                sSTemp = sTemp;
+                sLTemp = lTemp;
             }
         }
+
     }
 
     /**
@@ -192,7 +209,16 @@ public class BoardPanel extends JPanel implements ActionListener {
     //  In actionPerformed registriamo le sequenze di prima e seconda carta premuta.
     //  Carte, configurzione, e sequenza sono quello che ci serve per il replay
     private void writeCurrentGameToFile() {
-
+        try {
+            FileWriter fileWriter = new FileWriter(GAME_LAST_GAME_FILE);
+            fileWriter.write("(" + rows + "," + cols + ")" + "\n");
+            for (Card card : cards) {
+                fileWriter.write(card.getFrontIcon().getDescription() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // TODO: - COMPARING FIRST AND SECOND CARD FOR EQUALITY

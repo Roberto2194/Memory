@@ -1,7 +1,11 @@
 package src.board;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Objects;
 import static src.utility.GameIcons.*;
 
@@ -17,6 +21,7 @@ public class Card extends JButton {
 
     Card(String frontIcon) {
         this.frontIcon = scaleIcon(frontIcon);
+        this.frontIcon.setDescription(frontIcon);
         this.setName(frontIcon); // setting as a name the icon path
         this.setFocusable(false); // removes the dotted lines around the icon
         this.setBackground(Color.white);
