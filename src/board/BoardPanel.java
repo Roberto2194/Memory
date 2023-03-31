@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
+
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
 
@@ -40,6 +41,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         shuffleCards(cards);
         drawBoard(cards);
 
+        addNewHighScore();
         writeHighScoresToFile();
 
         this.setVisible(true);
@@ -121,22 +123,54 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * Adds a new high score (if present) to the record
+     * so that it can later be printed to file
+     */
+    private void addNewHighScore() {
+        // 1. add new high score
+        for (int i = 0; i < highScores.length; i++) {
+            flipCount = 10;
+            if (flipCount < highScores[i]) {
+                // 2. slide all elements by 1 position
+                int fSTemp;
+                int sSTemp = 0;
+                String fLTemp;
+                String sLTemp = "";
+                boolean first = true;
+
+                for (int j = i; j < highScores.length - 1; j++) {
+                    if (first) {
+                        fSTemp = highScores[j];
+                        fLTemp = scoreLabels[j];
+                        highScores[j] = flipCount;
+                        scoreLabels[j] = flipCount + " flips on " + rows + "x" + cols + " board";
+
+                        sSTemp = highScores[j + 1];
+                        sLTemp = scoreLabels[j + 1];
+                        highScores[j + 1] = fSTemp;
+                        scoreLabels[j + 1] = fLTemp;
+
+                        first = false;
+                    } else {
+                        int sTemp = highScores[j + 1];
+                        String lTemp = scoreLabels[j + 1];
+                        highScores[j + 1] = sSTemp;
+                        scoreLabels[j + 1] = sLTemp;
+                        sSTemp = sTemp;
+                        sLTemp = lTemp;
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    /**
      * Writes to file the score achieved in the current game only when
      * better than any of the existing ones.
      */
     private void writeHighScoresToFile() {
-        for (int i = 0; i < highScores.length; i++) {
-            // TODO: - THE LOGIC NEEDS TO BE FIXED.
-            //  Right now this just substitutes the new value at the given position.
-            //  It should instead shift the whole array by one position to the right
-            if (flipCount < highScores[i]) {
-                highScores[i] = flipCount;
-                scoreLabels[i] = flipCount + " flips on " + rows + "x" + cols + " board";
-                break;
-            }
-
-        }
-
         try {
             FileWriter fileWriter = new FileWriter(GAME_HIGH_SCORES_FILE);
             for (String scoreLabel : scoreLabels) {
