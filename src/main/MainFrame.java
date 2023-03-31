@@ -2,6 +2,7 @@ package src.main;
 
 import src.board.BoardPanel;
 import src.highScores.HighScoresPanel;
+import src.replay.ReplayPanel;
 import src.settings.SettingsPanel;
 import javax.swing.*;
 import java.awt.*;
@@ -54,10 +55,34 @@ public class MainFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    private void openHomePanel() {
+        HomePanel homePanel = new HomePanel();
+
+        MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
+        MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openReplayPanel()));
+        MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openHighScoresPanel()));
+        MainButton settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
+
+        homePanel.add(playButton);
+        homePanel.add(replayButton);
+        homePanel.add(highScoresButton);
+        homePanel.add(settingsButton);
+
+        this.setContentPane(homePanel);
+        this.revalidate();
+    }
+
     private void openBoardPanel() {
         BoardPanel boardPanel = new BoardPanel(rows, cols, timer, highScores, scoreLabels);
 
         this.setContentPane(boardPanel);
+        this.revalidate();
+    }
+
+    private void openReplayPanel() {
+        ReplayPanel replayPanel = new ReplayPanel();
+
+        this.setContentPane(replayPanel);
         this.revalidate();
     }
 
@@ -79,23 +104,6 @@ public class MainFrame extends JFrame implements ActionListener {
         settingsPanel.add(settingsSubmitButton);
 
         this.setContentPane(settingsPanel);
-        this.revalidate();
-    }
-
-    private void openHomePanel() {
-        HomePanel homePanel = new HomePanel();
-
-        MainButton playButton = new MainButton(GAME_NEW, GAME_YELLOW_COLOR, 250, (e -> openBoardPanel()));
-        MainButton replayButton = new MainButton(GAME_REPLAY, GAME_ORANGE_COLOR, 350, (e -> openBoardPanel()));
-        MainButton highScoresButton = new MainButton(GAME_HIGH_SCORES, GAME_RED_COLOR, 450, (e -> openHighScoresPanel()));
-        MainButton settingsButton = new MainButton(GAME_SETTINGS, GAME_DEEP_RED_COLOR, 550, (e -> openSettingsPanel()));
-
-        homePanel.add(playButton);
-        homePanel.add(replayButton);
-        homePanel.add(highScoresButton);
-        homePanel.add(settingsButton);
-
-        this.setContentPane(homePanel);
         this.revalidate();
     }
 

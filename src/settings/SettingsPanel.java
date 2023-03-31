@@ -2,6 +2,8 @@ package src.settings;
 
 import src.main.TitleLabel;
 import javax.swing.*;
+import java.awt.*;
+
 import static src.utility.GameColors.*;
 import static src.utility.GameConstants.*;
 import static src.utility.GameIcons.*;
@@ -63,6 +65,12 @@ public class SettingsPanel extends JPanel {
             this.setEnabled(false);
         }
          */
+
+        JLabel disclaimerLabel = new JLabel();
+        disclaimerLabel.setText(GAME_DISCLAIMER_CONFIGURATION);
+        disclaimerLabel.setBounds(200, 475, 400, 100);
+        disclaimerLabel.setForeground(Color.white);
+        this.add(disclaimerLabel);
 
         this.setVisible(true);
     }

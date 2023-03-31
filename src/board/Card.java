@@ -1,11 +1,7 @@
 package src.board;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Objects;
 import static src.utility.GameIcons.*;
 
