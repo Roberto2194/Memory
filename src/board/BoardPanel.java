@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 import java.util.TreeMap;
+
 import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
 import static src.utility.GameConstants.GAME_LAST_GAME_FILE;
 import static src.utility.GameIcons.gameIcons;
@@ -45,10 +46,13 @@ public class BoardPanel extends JPanel implements ActionListener {
         shuffleCards(cards);
         drawBoard(cards);
 
+        //THE FOLLOWING IS JUST FOR DEBUG:
+        /*
         flipCount = 12;
         moves.put("icons/avocado.png", "icons/banana.png");
         moves.put("icons/banana.png", "icons/grapes.png");
         writeCurrentGameToFile();
+         */
 
         if (gameOver) {
             new Thread(() -> {
@@ -264,8 +268,55 @@ public class BoardPanel extends JPanel implements ActionListener {
             moves.put(firstCard.getName(), secondCard.getName());
             // the same logic applies to the flip count:
             flipCount++;
+            // on a worker thread we wait for some seconds (the timer set by the user),
+            // and then we compare the two cards, without blocking the UI:
+            new Thread(() -> {
+                try {
+                    Thread.sleep(timer);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                if (!compareCards(firstCard, secondCard)) {
+                    firstCard.showBack();
+                    secondCard.showBack();
+                }
+            }).start();
+            if (areAllCardsFaceUp(cards)) {
+                gameOver = true;
+            }
             cardShowing = false;
         }
+    }
+
+    /**
+     * Compares the first and second card given, returning true
+     * if they're equal (that is, if they have the same icon),
+     * otherwise false.
+     *
+     * @param firstCard  the first card to compare
+     * @param secondCard the second card to compare
+     * @return true or false based on whether the two cards are equal or not.
+     */
+    private boolean compareCards(Card firstCard, Card secondCard) {
+        return Objects.equals(firstCard.getName(), secondCard.getName());
+    }
+
+    /**
+     * Iterates on all available cards to see whether they
+     * are all showing (that is, if they all are faceUp).
+     * If they are, that means that the game is over
+     *
+     * @param cards the cards on the board
+     * @return true or false based on whether the cards
+     * are all face up or not.
+     */
+    private boolean areAllCardsFaceUp(Card[] cards) {
+        for (Card card : cards) {
+            if (!card.getIsShowing()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

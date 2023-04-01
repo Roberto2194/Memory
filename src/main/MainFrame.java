@@ -114,7 +114,29 @@ public class MainFrame extends JFrame implements ActionListener {
             timer = settingsPanel.getTimer();
             rows = settingsPanel.getRows();
             cols = settingsPanel.getCols();
+
+            // any invalid configuration will result
+            // in the standard 4x4 board
+            if (!isConfigurationValid(rows, cols)) {
+                cols = 4;
+                rows = 4;
+            }
         }
+    }
+
+    /**
+     * Checks whether the configuration that we get as an input
+     * from the user is valid, otherwise we can not create the board.<br>
+     * For the configuration to be valid we need at lest 4 tiles,
+     * and if so, the total number of tiles must be even.
+     *
+     * @param rows    the number of rows
+     * @param columns the number of columns
+     * @return true or false based on whether the configuration is valid or not
+     */
+    private boolean isConfigurationValid(int rows, int columns) {
+        int tiles = rows * columns;
+        return tiles % 2 == 0 && tiles >= 4;
     }
 
     /**

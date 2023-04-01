@@ -76,21 +76,6 @@ public class SettingsPanel extends JPanel {
     }
 
     /**
-     * Checks whether the configuration that we get as an input
-     * from the user is valid, otherwise we can not create the board.<br>
-     * For the configuration to be valid we need at lest 4 tiles,
-     * and if so, the total number of tiles must be even.
-     *
-     * @param rows    the number of rows
-     * @param columns the number of columns
-     * @return true or false based on whether the configuration is valid or not
-     */
-    private boolean isConfigurationValid(int rows, int columns) {
-        int tiles = rows * columns;
-        return tiles % 2 == 0 && tiles >= 4;
-    }
-
-    /**
      * Checks to see whether the user inserted a valid integer value
      * inside the rows or columns textField.<br>
      * If he or she hasn't, then it returns 4, the default starting value.
