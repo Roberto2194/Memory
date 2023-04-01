@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.TreeMap;
@@ -266,7 +267,6 @@ public class BoardPanel extends JPanel implements ActionListener {
                         firstCard.showBack();
                         secondCard.showBack();
                     }
-                    // TODO: - WE SHOULD ONLY ENABLE CARDS THAT ARE NOT YET MATCHED
                     enableCards(cards);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
@@ -333,13 +333,16 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Enables all the cards.
+     * Enables all the cards except those that are already showing.
+     * In that case a match has been found.
      *
      * @param cards the array of cards to enable
      */
     private void enableCards(Card[] cards) {
         for (Card card : cards) {
-            card.addActionListener(this);
+            if (!card.getIsShowing()) {
+                card.addActionListener(this);
+            }
         }
     }
 
