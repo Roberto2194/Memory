@@ -2,11 +2,9 @@
 2
 icons/apple.png
 icons/avocado.png
-icons/avocado.png
 icons/apple.png
-3
 icons/avocado.png
-icons/apple.png
+2
 icons/avocado.png
 icons/avocado.png
 icons/apple.png

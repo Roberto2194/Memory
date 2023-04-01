@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 
 import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
 import static src.utility.GameConstants.GAME_LAST_GAME_FILE;
@@ -171,7 +173,6 @@ public class BoardPanel extends JPanel implements ActionListener {
                 sLTemp = lTemp;
             }
         }
-
     }
 
     /**

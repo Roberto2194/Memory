@@ -11,10 +11,9 @@ public class SettingsSlider extends JSlider {
         this.setMinimum(1);
         this.setMaximum(10);
         this.setValue(value);
-        this.setBounds(xCoord, yCoord, 350, 50);
+        this.setBounds(xCoord, yCoord, 365, 50);
         this.setPaintTicks(true); // the little signs that show the value
-        this.setMinorTickSpacing(1);
-        this.setMajorTickSpacing(3); // the spacing between the value signs on the slider
+        this.setMajorTickSpacing(1); // the spacing between the value signs on the slider
         this.setPaintLabels(true); // the number that shows the value of the signs
         this.setFont(new Font(GAME_FONT, Font.PLAIN, 15));
         this.setForeground(Color.white);

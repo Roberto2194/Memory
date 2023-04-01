@@ -3,11 +3,10 @@ package src.settings;
 import src.main.TitleLabel;
 
 import javax.swing.*;
-import java.awt.*;
 
-import static src.utility.GameColors.*;
+import static src.utility.GameColors.GAME_BLUE_COLOR;
 import static src.utility.GameConstants.*;
-import static src.utility.GameIcons.*;
+import static src.utility.GameIcons.GAME_SETTINGS_LOGO;
 
 /**
  * The Panel for managing both the timer
@@ -30,13 +29,13 @@ public class SettingsPanel extends JPanel {
         TitleLabel titleLabel = new TitleLabel(GAME_SETTINGS, 250, GAME_SETTINGS_LOGO);
         this.add(titleLabel);
 
-        SettingsLabel timerLabel = new SettingsLabel(GAME_TIMER, 75, 225);
-        SettingsSlider settingsSlider = new SettingsSlider(timer, 225, 225);
+        SettingsLabel timerLabel = new SettingsLabel(GAME_TIMER, 112, 225);
+        SettingsSlider settingsSlider = new SettingsSlider(timer, 220, 225);
         settingsSlider.addChangeListener(e -> this.timer = settingsSlider.getValue());
         this.add(timerLabel);
         this.add(settingsSlider);
 
-        SettingsLabel rowsLabel = new SettingsLabel(GAME_ROWS, 115, 325);
+        SettingsLabel rowsLabel = new SettingsLabel(GAME_ROWS, 112, 325);
         SettingsTextField rowsTextField = new SettingsTextField(Integer.toString(rows), 225, 325);
         rowsTextField.getDocument().addDocumentListener((SimpleDocumentListener) e ->
                 this.rows = checkIntegerValue(rowsTextField.getText())
