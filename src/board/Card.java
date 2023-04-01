@@ -15,7 +15,7 @@ public class Card extends JButton {
     private final ImageIcon backIcon = scaleIcon(GAME_CARD_BACK);
     private boolean isShowing;
 
-    Card(String frontIcon) {
+    public Card(String frontIcon) {
         this.frontIcon = scaleIcon(frontIcon);
         this.setName(frontIcon); // setting as a name the icon path
         this.setFocusable(false); // removes the dotted lines around the icon

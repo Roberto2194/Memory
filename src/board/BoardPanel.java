@@ -6,13 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 import java.util.TreeMap;
-
-import static src.utility.GameConstants.*;
-import static src.utility.GameIcons.*;
+import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
+import static src.utility.GameConstants.GAME_LAST_GAME_FILE;
+import static src.utility.GameIcons.gameIcons;
 
 /**
  * The Panel in which the actual game plays out
@@ -46,6 +45,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         shuffleCards(cards);
         drawBoard(cards);
 
+        flipCount = 12;
         moves.put("icons/avocado.png", "icons/banana.png");
         moves.put("icons/banana.png", "icons/grapes.png");
         writeCurrentGameToFile();
@@ -225,13 +225,15 @@ public class BoardPanel extends JPanel implements ActionListener {
             for (Card card : cards) {
                 fileWriter.write(card.getName() + "\n");
             }
-            fileWriter.write("--------------\n");
+            fileWriter.write(flipCount + "\n");
             for (String key : moves.keySet()) {
                 String value = moves.get(key);
                 if (!Objects.equals(value, moves.get(moves.lastKey()))) {
-                    fileWriter.write(key + ":" + value + "\n");
+                    fileWriter.write(key + "\n");
+                    fileWriter.write(value + "\n");
                 } else {
-                    fileWriter.write(key + ":" + value);
+                    fileWriter.write(key + "\n");
+                    fileWriter.write(value);
                 }
             }
             fileWriter.close();
@@ -260,9 +262,10 @@ public class BoardPanel extends JPanel implements ActionListener {
             // we record the move here because this is where
             // the first and the second card both have value:
             moves.put(firstCard.getName(), secondCard.getName());
+            // the same logic applies to the flip count:
+            flipCount++;
             cardShowing = false;
         }
-        flipCount++;
     }
 
 }
