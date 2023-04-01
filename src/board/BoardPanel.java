@@ -291,15 +291,19 @@ public class BoardPanel extends JPanel implements ActionListener {
             new Thread(() -> {
                 try {
                     disableCards(cards);
-                    Thread.sleep(timer);
-                    enableCards(cards);
+                    // if the two cards are a match we do not have to wait
+                    // for the timer set by the user:
+                    if (!compareCards(firstCard, secondCard)) {
+                        Thread.sleep(timer);
+                        enableCards(cards);
+                    } else {
+                        enableCards(cards);
+                    }
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }).start();
-            if (areAllCardsFaceUp(cards)) {
-                gameOver = true;
-            }
+            if (areAllCardsFaceUp(cards)) gameOver = true;
             cardShowing = false;
         }
     }
@@ -340,17 +344,13 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     private void disableCards(Card[] cards) {
         for (Card card : cards) {
-            if (!card.getIsShowing()) {
-                card.removeActionListener(this);
-            }
+            card.removeActionListener(this);
         }
     }
 
     private void enableCards(Card[] cards) {
         for (Card card : cards) {
-            if (!card.getIsShowing()) {
-                card.addActionListener(this);
-            }
+            card.addActionListener(this);
         }
     }
 
