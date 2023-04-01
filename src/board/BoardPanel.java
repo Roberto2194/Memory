@@ -273,12 +273,28 @@ public class BoardPanel extends JPanel implements ActionListener {
             new Thread(() -> {
                 try {
                     Thread.sleep(timer);
+                    if (!compareCards(firstCard, secondCard)) {
+                        firstCard.showBack();
+                        secondCard.showBack();
+                    } else {
+                        // if the two cards are a match they
+                        // shouldn't be clickable anymore:
+                        firstCard.removeActionListener(this);
+                        secondCard.removeActionListener(this);
+                    }
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                if (!compareCards(firstCard, secondCard)) {
-                    firstCard.showBack();
-                    secondCard.showBack();
+            }).start();
+            // on a second worker thread we manage the enabling and disabling
+            // of cards. For the same reason as above:
+            new Thread(() -> {
+                try {
+                    disableCards(cards);
+                    Thread.sleep(timer);
+                    enableCards(cards);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
                 }
             }).start();
             if (areAllCardsFaceUp(cards)) {
@@ -292,19 +308,22 @@ public class BoardPanel extends JPanel implements ActionListener {
      * Compares the first and second card given, returning true
      * if they're equal (that is, if they have the same icon),
      * otherwise false.
+     * Also ensures that the first and second cards do not have
+     * the same memory address, because that would mean that
+     * the user has clicked on the very same tile twice.
      *
      * @param firstCard  the first card to compare
      * @param secondCard the second card to compare
      * @return true or false based on whether the two cards are equal or not.
      */
     private boolean compareCards(Card firstCard, Card secondCard) {
-        return Objects.equals(firstCard.getName(), secondCard.getName());
+        return Objects.equals(firstCard.getName(), secondCard.getName()) && firstCard != secondCard;
     }
 
     /**
      * Iterates on all available cards to see whether they
      * are all showing (that is, if they all are faceUp).
-     * If they are, that means that the game is over
+     * If they are, that means that the game is over.
      *
      * @param cards the cards on the board
      * @return true or false based on whether the cards
@@ -317,6 +336,22 @@ public class BoardPanel extends JPanel implements ActionListener {
             }
         }
         return true;
+    }
+
+    private void disableCards(Card[] cards) {
+        for (Card card : cards) {
+            if (!card.getIsShowing()) {
+                card.removeActionListener(this);
+            }
+        }
+    }
+
+    private void enableCards(Card[] cards) {
+        for (Card card : cards) {
+            if (!card.getIsShowing()) {
+                card.addActionListener(this);
+            }
+        }
     }
 
 }
