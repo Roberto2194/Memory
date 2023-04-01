@@ -8,6 +8,7 @@ import static src.utility.GameConstants.*;
 public class SettingsSlider extends JSlider {
 
     public SettingsSlider(int value, int xCoord, int yCoord) {
+        // TODO: - IMPROVE THE GAME TIMER
         this.setMinimum(0);
         this.setMaximum(6);
         this.setValue(value);

@@ -51,21 +51,6 @@ public class SettingsPanel extends JPanel {
         this.add(colsLabel);
         this.add(colsTextField);
 
-        // TODO: - NICE TO HAVE
-        //  Implement a check that verifies that the user
-        //  does not insert an odd or <4 configuration
-        /*
-        if (!isConfigurationValid(rows, cols)) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    GAME_INVALID_CONFIGURATION_MESSAGE,
-                    GAME_INVALID_CONFIGURATION_TITLE,
-                    JOptionPane.ERROR_MESSAGE
-            );
-            this.setEnabled(false);
-        }
-         */
-
         JLabel disclaimerLabel = new JLabel();
         disclaimerLabel.setText(GAME_DISCLAIMER_CONFIGURATION);
         disclaimerLabel.setBounds(200, 475, 400, 100);

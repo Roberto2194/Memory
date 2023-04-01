@@ -30,7 +30,6 @@ public class BoardPanel extends JPanel implements ActionListener {
     int rows;
     int cols;
     int highScoreIndex;
-    boolean gameOver = false;
     TreeMap<String, String> moves = new TreeMap<>();
 
     public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
@@ -236,12 +235,6 @@ public class BoardPanel extends JPanel implements ActionListener {
         }
     }
 
-    // TODO: - COMPARING FIRST AND SECOND CARD FOR EQUALITY
-    //  1 - If firstCard and secondCard are not equal, then flip them back down after a set timer.
-    //  2 - Otherwise if they have the same front, then leave them face up.
-    //  In both cases increase the flip count (and save the move to file on a worker thread).
-    //  3 - If all cards are flipped up, then end the game and load the files with the top 5-scores.
-    //  if the current game has a higher score than any of the top 5 ones, save it to file and display it.
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!cardShowing) {
@@ -267,33 +260,14 @@ public class BoardPanel extends JPanel implements ActionListener {
             // and then we compare the two cards, without blocking the UI:
             new Thread(() -> {
                 try {
-                    Thread.sleep(timer);
-                    if (areCardsDifferent(firstCard, secondCard)) {
-                        firstCard.showBack();
-                        secondCard.showBack();
-                    } else {
-                        // if the two cards are a match they
-                        // shouldn't be clickable anymore:
-                        firstCard.removeActionListener(this);
-                        secondCard.removeActionListener(this);
-                    }
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }).start();
-            // on a second worker thread we manage the enabling and disabling
-            // of cards. For the same reason as above:
-            new Thread(() -> {
-                try {
                     disableCards(cards);
-                    // if the two cards are a match we do not have to wait
-                    // for the timer set by the user:
                     if (areCardsDifferent(firstCard, secondCard)) {
                         Thread.sleep(timer);
-                        enableCards(cards);
-                    } else {
-                        enableCards(cards);
+                        firstCard.showBack();
+                        secondCard.showBack();
                     }
+                    // TODO: - WE SHOULD ONLY ENABLE CARDS THAT ARE NOT YET MATCHED
+                    enableCards(cards);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -303,7 +277,6 @@ public class BoardPanel extends JPanel implements ActionListener {
             // 1. add the new score (if better than any of the top 5 recorded)
             // 2. write the current game to file so that we can replay it if we want
             if (areAllCardsFaceUp(cards)) {
-                gameOver = true;
                 new Thread(() -> {
                     if (isNewHighScore()) {
                         addNewHighScore();
@@ -312,9 +285,6 @@ public class BoardPanel extends JPanel implements ActionListener {
                     writeCurrentGameToFile();
                 }).start();
                 JOptionPane.showMessageDialog(null, "Congrats! Your score is " + flipCount);
-            }
-
-            if (firstCard != secondCard) {
             }
             cardShowing = false;
         }
