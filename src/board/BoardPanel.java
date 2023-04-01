@@ -54,16 +54,6 @@ public class BoardPanel extends JPanel implements ActionListener {
         writeCurrentGameToFile();
          */
 
-        if (gameOver) {
-            new Thread(() -> {
-                if (isNewHighScore()) {
-                    addNewHighScore();
-                    writeHighScoresToFile();
-                }
-                writeCurrentGameToFile();
-            }).start();
-        }
-
         this.setVisible(true);
     }
 
@@ -256,24 +246,29 @@ public class BoardPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (!cardShowing) {
             firstCard = (Card) e.getSource();
+            // removing the action listener so that we can not
+            // click on the same tile twice:
+            firstCard.removeActionListener(this);
             System.out.println("First card selected " + firstCard.getName());
             firstCard.showFront();
             cardShowing = true;
         } else {
             secondCard = (Card) e.getSource();
+            // removing the action listener so that we can not
+            // click on the same tile twice:
+            secondCard.removeActionListener(this);
             System.out.println("Second card selected " + secondCard.getName());
             secondCard.showFront();
             // we record the move here because this is where
             // the first and the second card both have value:
             moves.put(firstCard.getName(), secondCard.getName());
-            // the same logic applies to the flip count:
             flipCount++;
             // on a worker thread we wait for some seconds (the timer set by the user),
             // and then we compare the two cards, without blocking the UI:
             new Thread(() -> {
                 try {
                     Thread.sleep(timer);
-                    if (!compareCards(firstCard, secondCard)) {
+                    if (areCardsDifferent(firstCard, secondCard)) {
                         firstCard.showBack();
                         secondCard.showBack();
                     } else {
@@ -293,7 +288,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                     disableCards(cards);
                     // if the two cards are a match we do not have to wait
                     // for the timer set by the user:
-                    if (!compareCards(firstCard, secondCard)) {
+                    if (areCardsDifferent(firstCard, secondCard)) {
                         Thread.sleep(timer);
                         enableCards(cards);
                     } else {
@@ -303,25 +298,39 @@ public class BoardPanel extends JPanel implements ActionListener {
                     throw new RuntimeException(ex);
                 }
             }).start();
-            if (areAllCardsFaceUp(cards)) gameOver = true;
+            // if all cards are face up, that means that the game is over
+            // and that we should do the following operations:
+            // 1. add the new score (if better than any of the top 5 recorded)
+            // 2. write the current game to file so that we can replay it if we want
+            if (areAllCardsFaceUp(cards)) {
+                gameOver = true;
+                new Thread(() -> {
+                    if (isNewHighScore()) {
+                        addNewHighScore();
+                        writeHighScoresToFile();
+                    }
+                    writeCurrentGameToFile();
+                }).start();
+                JOptionPane.showMessageDialog(null, "Congrats! Your score is " + flipCount);
+            }
+
+            if (firstCard != secondCard) {
+            }
             cardShowing = false;
         }
     }
 
     /**
      * Compares the first and second card given, returning true
-     * if they're equal (that is, if they have the same icon),
+     * if they're different (that is, if they do NOT have the same icon),
      * otherwise false.
-     * Also ensures that the first and second cards do not have
-     * the same memory address, because that would mean that
-     * the user has clicked on the very same tile twice.
      *
      * @param firstCard  the first card to compare
      * @param secondCard the second card to compare
      * @return true or false based on whether the two cards are equal or not.
      */
-    private boolean compareCards(Card firstCard, Card secondCard) {
-        return Objects.equals(firstCard.getName(), secondCard.getName()) && firstCard != secondCard;
+    private boolean areCardsDifferent(Card firstCard, Card secondCard) {
+        return !Objects.equals(firstCard.getName(), secondCard.getName());
     }
 
     /**
@@ -342,12 +351,22 @@ public class BoardPanel extends JPanel implements ActionListener {
         return true;
     }
 
+    /**
+     * Disables all the cards.
+     *
+     * @param cards the array of cards to disable
+     */
     private void disableCards(Card[] cards) {
         for (Card card : cards) {
             card.removeActionListener(this);
         }
     }
 
+    /**
+     * Enables all the cards.
+     *
+     * @param cards the array of cards to enable
+     */
     private void enableCards(Card[] cards) {
         for (Card card : cards) {
             card.addActionListener(this);
