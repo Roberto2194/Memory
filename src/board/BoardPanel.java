@@ -6,10 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
 import static src.utility.GameConstants.GAME_LAST_GAME_FILE;
@@ -25,17 +22,17 @@ public class BoardPanel extends JPanel implements ActionListener {
     boolean cardShowing;
     int flipCount;
     Card[] cards;
-    int timer;
+    long timer;
     int[] highScores;
     String[] scoreLabels;
     int rows;
     int cols;
     int highScoreIndex;
-    TreeMap<String, String> moves = new TreeMap<>();
+    ArrayList<String> moves = new ArrayList<>();
 
     public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
         this.setLayout(new GridLayout(rows, cols));
-        this.timer = timer * 1000;
+        this.timer = timer * 250L;
         this.highScores = highScores;
         this.scoreLabels = scoreLabels;
         this.rows = rows;
@@ -45,14 +42,6 @@ public class BoardPanel extends JPanel implements ActionListener {
         cards = createCards(icons);
         shuffleCards(cards);
         drawBoard(cards);
-
-        //THE FOLLOWING IS JUST FOR DEBUG:
-        /*
-        flipCount = 12;
-        moves.put("icons/avocado.png", "icons/banana.png");
-        moves.put("icons/banana.png", "icons/grapes.png");
-        writeCurrentGameToFile();
-         */
 
         this.setVisible(true);
     }
@@ -220,15 +209,8 @@ public class BoardPanel extends JPanel implements ActionListener {
                 fileWriter.write(card.getName() + "\n");
             }
             fileWriter.write(flipCount + "\n");
-            for (String key : moves.keySet()) {
-                String value = moves.get(key);
-                if (!Objects.equals(value, moves.get(moves.lastKey()))) {
-                    fileWriter.write(key + "\n");
-                    fileWriter.write(value + "\n");
-                } else {
-                    fileWriter.write(key + "\n");
-                    fileWriter.write(value);
-                }
+            for (String move : moves) {
+                fileWriter.write(move + "\n");
             }
             fileWriter.close();
         } catch (IOException e) {
@@ -255,7 +237,8 @@ public class BoardPanel extends JPanel implements ActionListener {
             secondCard.showFront();
             // we record the move here because this is where
             // the first and the second card both have value:
-            moves.put(firstCard.getName(), secondCard.getName());
+            moves.add(firstCard.getName());
+            moves.add(secondCard.getName());
             flipCount++;
             // on a worker thread we wait for some seconds (the timer set by the user),
             // and then we compare the two cards, without blocking the UI:

@@ -1,6 +1,7 @@
 package src.settings;
 
 import src.main.TitleLabel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -51,11 +52,11 @@ public class SettingsPanel extends JPanel {
         this.add(colsLabel);
         this.add(colsTextField);
 
-        JLabel disclaimerLabel = new JLabel();
-        disclaimerLabel.setText(GAME_DISCLAIMER_CONFIGURATION);
-        disclaimerLabel.setBounds(200, 475, 400, 100);
-        disclaimerLabel.setForeground(Color.white);
-        this.add(disclaimerLabel);
+        DisclaimerLabel disclaimerConfigurationLabel = new DisclaimerLabel(GAME_DISCLAIMER_CONFIGURATION, 200, 475);
+        this.add(disclaimerConfigurationLabel);
+
+        DisclaimerLabel disclaimerTilesLabel = new DisclaimerLabel(GAME_DISCLAIMER_TILES, 275, 500);
+        this.add(disclaimerTilesLabel);
 
         this.setVisible(true);
     }

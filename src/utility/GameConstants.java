@@ -18,8 +18,7 @@ public class GameConstants {
     public static final String GAME_UNKNOWN_EXCEPTION_MESSAGE = "Found an unknown exception";
     public static final String GAME_UNKNOWN_EXCEPTION_TITLE = "Unexpected error";
     public static final String GAME_DISCLAIMER_CONFIGURATION = "Submitting an invalid configuration will result in the default 4x4 board";
-    public static final String GAME_INVALID_CONFIGURATION_MESSAGE = "Please insert a valid configuration";
-    public static final String GAME_INVALID_CONFIGURATION_TITLE = "Invalid board configuration";
+    public static final String GAME_DISCLAIMER_TILES = "Maximum number of tiles accepted is: 40";
     public static final String GAME_HIGH_SCORES_FILE = "high_scores.txt";
     public static final String GAME_LAST_GAME_FILE = "last_game.txt";
     public static final String GAME_NO_SCORE_RECORDED_YET = "No score recorded yet";

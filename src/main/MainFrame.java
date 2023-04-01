@@ -30,7 +30,7 @@ public class MainFrame extends JFrame implements ActionListener {
     int[] highScores;
     int arrayIndex;
     String[] scoreLabels;
-    private int timer = 3;
+    private int timer = 5;
     private int rows = 4;
     private int cols = 4;
 
@@ -116,7 +116,7 @@ public class MainFrame extends JFrame implements ActionListener {
             cols = settingsPanel.getCols();
 
             // any invalid configuration will result
-            // in the standard 4x4 board
+            // in the standard 4x4 board:
             if (!isConfigurationValid(rows, cols)) {
                 cols = 4;
                 rows = 4;
@@ -125,7 +125,7 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * Checks whether the configuration that we get as an input
+     * Checks to see whether the configuration that we get as an input
      * from the user is valid, otherwise we can not create the board.<br>
      * For the configuration to be valid we need at lest 4 tiles,
      * and if so, the total number of tiles must be even.
