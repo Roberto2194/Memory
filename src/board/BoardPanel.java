@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.TreeMap;
 
 import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
 import static src.utility.GameConstants.GAME_LAST_GAME_FILE;
@@ -208,10 +209,12 @@ public class BoardPanel extends JPanel implements ActionListener {
             fileWriter.write(cols + "\n");
             for (Card card : cards) {
                 fileWriter.write(card.getName() + "\n");
+                fileWriter.write(card.getIcon().toString() + "\n");
             }
             fileWriter.write(flipCount + "\n");
-            for (String move : moves) {
-                fileWriter.write(move + "\n");
+            for (int i = 0; i < moves.size(); i = i + 2) {
+                fileWriter.write(moves.get(i) + "\n");
+                fileWriter.write(moves.get(i + 1) + "\n");
             }
             fileWriter.close();
         } catch (IOException e) {
@@ -239,7 +242,9 @@ public class BoardPanel extends JPanel implements ActionListener {
             // we record the move here because this is where
             // the first and the second card both have value:
             moves.add(firstCard.getName());
+            moves.add(firstCard.getIcon().toString());
             moves.add(secondCard.getName());
+            moves.add(secondCard.getIcon().toString());
             flipCount++;
             // on a worker thread we wait for some seconds (the timer set by the user),
             // and then we compare the two cards, without blocking the UI:

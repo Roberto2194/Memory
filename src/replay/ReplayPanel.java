@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static src.utility.GameConstants.*;
 
@@ -17,8 +18,10 @@ public class ReplayPanel extends JPanel {
     int rows;
     int cols;
     ArrayList<String> cardLabels = new ArrayList<>();
+    ArrayList<String> cardLabelsIdentifiers = new ArrayList<>();
     int flipCount;
     ArrayList<String> moves = new ArrayList<>();
+    ArrayList<String> movesIdentifiers = new ArrayList<>();
     Card[] cards;
 
     public ReplayPanel() {
@@ -33,6 +36,8 @@ public class ReplayPanel extends JPanel {
         //  flippa la prima carta della lista e a seguire dopo poco la seconda.
         //  Se sono uguali allora lasciale faccia su, altrimenti girale faccia giù.
         //  Continua il processo fin quando tutte le carte sono scoperte faccia su.
+
+        playOutGame();
     }
 
     /**
@@ -45,28 +50,16 @@ public class ReplayPanel extends JPanel {
             rows = Integer.parseInt(bufferedReader.readLine());
             cols = Integer.parseInt(bufferedReader.readLine());
 
-            int i = 0;
-            while (i < rows * cols) {
+            for (int i = 0; i < (rows * cols) * 2; i = i + 2) {
                 cardLabels.add(bufferedReader.readLine());
-                i++;
+                cardLabelsIdentifiers.add(bufferedReader.readLine());
             }
 
             flipCount = Integer.parseInt(bufferedReader.readLine());
 
-            int j = 0;
-            while (j < flipCount * 2) {
+            for (int j = 0; j < flipCount * 4; j = j + 2) {
                 moves.add(bufferedReader.readLine());
-                j++;
-            }
-
-            System.out.println(rows);
-            System.out.println(cols);
-            for (String card : cardLabels) {
-                System.out.println(card);
-            }
-            System.out.println(flipCount);
-            for (String move : moves) {
-                System.out.println(move);
+                movesIdentifiers.add(bufferedReader.readLine());
             }
 
             bufferedReader.close();
@@ -75,6 +68,24 @@ public class ReplayPanel extends JPanel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void playOutGame() {
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < moves.size(); i++) {
+                    for (int j = 0; j < cardLabelsIdentifiers.size(); j++) {
+                        if (Objects.equals(movesIdentifiers.get(i), cardLabelsIdentifiers.get(j))) {
+                            Thread.sleep(1000L);
+                            cards[j].showFront();
+                            break;
+                        }
+                    }
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     /**
@@ -105,5 +116,6 @@ public class ReplayPanel extends JPanel {
             this.add(card);
         }
     }
+
 
 }
