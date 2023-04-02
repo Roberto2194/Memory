@@ -1,5 +1,5 @@
-3 flips on 2x2 board
-3 flips on 2x2 board
-3 flips on 2x3 board
-4 flips on 2x2 board
-6 flips on 3x2 board
+12 flips on 4x4 board
+14 flips on 4x4 board
+16 flips on 4x4 board
+20 flips on 4x4 board
+22 flips on 4x4 board

@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.TreeMap;
 
 import static src.utility.GameConstants.GAME_HIGH_SCORES_FILE;
 import static src.utility.GameConstants.GAME_LAST_GAME_FILE;
@@ -251,7 +250,7 @@ public class BoardPanel extends JPanel implements ActionListener {
             new Thread(() -> {
                 try {
                     disableCards(cards);
-                    if (areCardsDifferent(firstCard, secondCard)) {
+                    if (!Objects.equals(firstCard.getName(), secondCard.getName())) {
                         Thread.sleep(timer);
                         firstCard.showBack();
                         secondCard.showBack();
@@ -277,19 +276,6 @@ public class BoardPanel extends JPanel implements ActionListener {
             }
             cardShowing = false;
         }
-    }
-
-    /**
-     * Compares the first and second card given, returning true
-     * if they're different (that is, if they do NOT have the same icon),
-     * otherwise false.
-     *
-     * @param firstCard  the first card to compare
-     * @param secondCard the second card to compare
-     * @return true or false based on whether the two cards are equal or not.
-     */
-    private boolean areCardsDifferent(Card firstCard, Card secondCard) {
-        return !Objects.equals(firstCard.getName(), secondCard.getName());
     }
 
     /**

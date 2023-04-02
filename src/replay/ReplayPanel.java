@@ -23,6 +23,9 @@ public class ReplayPanel extends JPanel {
     ArrayList<String> moves = new ArrayList<>();
     ArrayList<String> movesIdentifiers = new ArrayList<>();
     Card[] cards;
+    boolean cardShowing;
+    Card firstCard;
+    Card secondCard;
 
     public ReplayPanel() {
         loadLastGameFromFile();
@@ -30,12 +33,6 @@ public class ReplayPanel extends JPanel {
 
         cards = createCards(cardLabels);
         drawBoard(cards);
-
-        // TODO: - PLAY OUT THE MOVES ONE BY ONE
-        //  Si potrebbe la stessa logica utilizzata in BoardPanel:
-        //  flippa la prima carta della lista e a seguire dopo poco la seconda.
-        //  Se sono uguali allora lasciale faccia su, altrimenti girale faccia giù.
-        //  Continua il processo fin quando tutte le carte sono scoperte faccia su.
 
         playOutGame();
     }
@@ -70,6 +67,10 @@ public class ReplayPanel extends JPanel {
         }
     }
 
+    /**
+     * Replays the most recent game by looping through the list
+     * of moves and its identifiers
+     */
     private void playOutGame() {
         new Thread(() -> {
             try {
@@ -77,8 +78,24 @@ public class ReplayPanel extends JPanel {
                     for (int j = 0; j < cardLabelsIdentifiers.size(); j++) {
                         if (Objects.equals(movesIdentifiers.get(i), cardLabelsIdentifiers.get(j))) {
                             Thread.sleep(1000L);
-                            cards[j].showFront();
-                            break;
+                            if (!cardShowing) {
+                                firstCard = cards[j];
+                                firstCard.showFront();
+                                cardShowing = true;
+                            } else {
+                                secondCard = cards[j];
+                                secondCard.showFront();
+                                // if the two cards are different then they should go back face down:
+                                if (!Objects.equals(firstCard.getName(), secondCard.getName())) {
+                                    Thread.sleep(1000L);
+                                    firstCard.showBack();
+                                    secondCard.showBack();
+                                }
+                                if (areAllCardsFaceUp(cards)) {
+                                    JOptionPane.showMessageDialog(null, "Congrats! Your score is " + flipCount);
+                                }
+                                cardShowing = false;
+                            }
                         }
                     }
                 }
@@ -117,5 +134,22 @@ public class ReplayPanel extends JPanel {
         }
     }
 
+    /**
+     * Iterates on all available cards to see whether they
+     * are all showing (that is, if they all are faceUp).
+     * If they are, that means that the game is over.
+     *
+     * @param cards the cards on the board
+     * @return true or false based on whether the cards
+     * are all face up or not.
+     */
+    private boolean areAllCardsFaceUp(Card[] cards) {
+        for (Card card : cards) {
+            if (!card.getIsShowing()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
