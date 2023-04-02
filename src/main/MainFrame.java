@@ -27,9 +27,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private SettingsPanel settingsPanel;
     private MainButton settingsSubmitButton;
-    int[] highScores;
-    int arrayIndex;
-    String[] scoreLabels;
+    private final int[] highScores;
+    private int arrayIndex;
+    private final String[] scoreLabels;
     private int timer = 5;
     private int rows = 4;
     private int cols = 4;

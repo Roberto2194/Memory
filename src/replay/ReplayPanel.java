@@ -15,17 +15,17 @@ import static src.utility.GameConstants.*;
 
 public class ReplayPanel extends JPanel {
 
-    int rows;
-    int cols;
-    ArrayList<String> cardLabels = new ArrayList<>();
-    ArrayList<String> cardLabelsIdentifiers = new ArrayList<>();
-    int flipCount;
-    ArrayList<String> moves = new ArrayList<>();
-    ArrayList<String> movesIdentifiers = new ArrayList<>();
-    Card[] cards;
-    boolean cardShowing;
-    Card firstCard;
-    Card secondCard;
+    private int rows;
+    private int cols;
+    private final ArrayList<String> cardLabels = new ArrayList<>();
+    private final ArrayList<String> cardLabelsIdentifiers = new ArrayList<>();
+    private int flipCount;
+    private final ArrayList<String> moves = new ArrayList<>();
+    private final ArrayList<String> movesIdentifiers = new ArrayList<>();
+    private final Card[] cards;
+    private boolean cardShowing;
+    private Card firstCard;
+    private Card secondCard;
 
     public ReplayPanel() {
         loadLastGameFromFile();
@@ -150,6 +150,22 @@ public class ReplayPanel extends JPanel {
             }
         }
         return true;
+    }
+
+    public ArrayList<String> getCardLabels() {
+        return cardLabels;
+    }
+
+    public ArrayList<String> getCardLabelsIdentifiers() {
+        return cardLabelsIdentifiers;
+    }
+
+    public ArrayList<String> getMoves() {
+        return moves;
+    }
+
+    public ArrayList<String> getMovesIdentifiers() {
+        return movesIdentifiers;
     }
 
 }

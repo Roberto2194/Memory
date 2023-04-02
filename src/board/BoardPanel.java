@@ -19,18 +19,18 @@ import static src.utility.GameIcons.gameIcons;
  */
 public class BoardPanel extends JPanel implements ActionListener {
 
-    Card firstCard;
-    Card secondCard;
-    boolean cardShowing;
-    int flipCount;
-    Card[] cards;
-    long timer;
-    int[] highScores;
-    String[] scoreLabels;
-    int rows;
-    int cols;
-    int highScoreIndex;
-    ArrayList<String> moves = new ArrayList<>();
+    private Card firstCard;
+    private Card secondCard;
+    private boolean cardShowing;
+    private int flipCount;
+    private final Card[] cards;
+    private final long timer;
+    private final int[] highScores;
+    private final String[] scoreLabels;
+    private final int rows;
+    private final int cols;
+    private int highScoreIndex;
+    private final ArrayList<String> moves = new ArrayList<>();
 
     public BoardPanel(int rows, int cols, int timer, int[] highScores, String[] scoreLabels) {
         this.setLayout(new GridLayout(rows, cols));
@@ -319,6 +319,34 @@ public class BoardPanel extends JPanel implements ActionListener {
                 card.addActionListener(this);
             }
         }
+    }
+
+    public Card getFirstCard() {
+        return firstCard;
+    }
+
+    public Card getSecondCard() {
+        return secondCard;
+    }
+
+    public int[] getHighScores() {
+        return highScores;
+    }
+
+    public String[] getScoreLabels() {
+        return scoreLabels;
+    }
+
+    public long getTimer() {
+        return timer;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
     }
 
 }

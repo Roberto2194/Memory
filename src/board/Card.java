@@ -38,6 +38,14 @@ public class Card extends JButton {
         return isShowing;
     }
 
+    public ImageIcon getFrontIcon() {
+        return frontIcon;
+    }
+
+    public ImageIcon getBackIcon() {
+        return backIcon;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
