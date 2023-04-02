@@ -8,7 +8,4 @@ public class Main {
         new MainFrame();
     }
 
-    //TODO: - REMEMBER TO ADD 10 JUNIT TESTS
-    // https://www.vogella.com/tutorials/JUnit/article.html
-
 }

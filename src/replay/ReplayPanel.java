@@ -68,8 +68,8 @@ public class ReplayPanel extends JPanel {
     }
 
     /**
-     * Replays the most recent game by looping through the list
-     * of moves and its identifiers
+     * Replays the most recent game by looping through
+     * the list of moves and its identifiers
      */
     private void playOutGame() {
         new Thread(() -> {
